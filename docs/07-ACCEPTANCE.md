@@ -95,6 +95,20 @@ Jalankan manual di browser. Belum perlu tes otomatis.
 | F8 | Buka `/tentang` di lebar 400px | Memakai berkas mobile, teks tidak menumpuk foto |
 | F9 | Periksa jaringan di DevTools | Yang dimuat berkas `.webp`, bukan `.jpg` |
 
+## P. PWA panel admin (dari `docs/10-PWA-ADMIN.md`)
+
+| # | Periksa | Hasil yang benar |
+|---|---|---|
+| P1 | Buka `/admin` di Chrome HP | Muncul tawaran "Instal aplikasi", atau tersedia di menu |
+| P2 | Pasang, lalu buka dari ikon layar utama | Terbuka tanpa address bar, warna status bar rose |
+| P3 | Tekan lama ikonnya di Android | Muncul pintasan "Pesanan baru" |
+| P4 | Buka halaman Bahan & stok, ubah stok dari laptop, muat ulang di HP | Angka **langsung berubah** — bukan angka lama dari cache |
+| P5 | Matikan internet, buka ikon aplikasi | Muncul halaman "Tidak ada koneksi", bukan layar putih |
+| P6 | Matikan internet, coba simpan pesanan | Gagal dengan jelas. **Tidak boleh** pura-pura tersimpan |
+| P7 | Buka halaman publik `/` di HP | **Tidak** muncul tawaran instal aplikasi |
+| P8 | Ubah isi `app.css`, naikkan `VERSI`, muat ulang | Tampilan baru langsung terpakai |
+| P9 | DevTools → Application → Manifest | Tidak ada error, semua ikon terbaca |
+
 ## H. Laporan
 
 | # | Langkah | Hasil yang benar |

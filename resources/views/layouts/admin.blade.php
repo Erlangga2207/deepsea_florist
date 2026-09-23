@@ -24,6 +24,13 @@
     @include('layouts.aset')
     <meta name="robots" content="noindex">
     <title>@yield('judul', 'Panel') — Deepsea Florist</title>
+    {{-- PWA hanya untuk panel admin, jangan dipasang di layout publik (docs/10-PWA-ADMIN.md) --}}
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#B23A57">
+    <link rel="apple-touch-icon" href="/img/pwa/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Deepsea Admin">
 </head>
 <body>
 <div class="admin">
@@ -67,5 +74,12 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/admin' }).catch(() => {}); // gagal daftar tidak boleh merusak halaman
+    });
+}
+</script>
 </body>
 </html>

@@ -210,6 +210,7 @@ GET  /katalog/{produk:slug}    publik.detail
 GET  /tentang                  publik.tentang
 GET  /kontak                   publik.kontak
 GET  /faq                      publik.faq
+GET  /offline                  offline   (halaman cadangan PWA admin)
 
 GET  /admin                    admin.dashboard
 resource /admin/pesanan

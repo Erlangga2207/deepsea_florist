@@ -81,6 +81,8 @@ php artisan serve
 npm install && npm run dev   # kalau memakai Vite
 ```
 
+**Setiap kali `public/css/app.css` (atau berkas lain di daftar `ASET` pada `public/sw.js`) berubah, naikkan `VERSI` di `public/sw.js`** (`deepsea-v1` → `deepsea-v2`). Service worker panel admin menyimpan aset itu di cache; kalau lupa, HP pemilik tetap menampilkan tampilan lama. Lihat `docs/10-PWA-ADMIN.md`.
+
 ## Cara kerja yang diharapkan
 
 - Kerjakan **satu tahap dari `docs/06-BUILD-PLAN.md`** per sesi, jangan lompat.

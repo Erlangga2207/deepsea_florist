@@ -121,6 +121,14 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
 .beban-merah{ background:var(--red); }
 .beban-jam{ font-size:.9rem; min-width:6.5rem; text-align:right; }
 
+/* Halaman offline PWA: tanpa Bootstrap, karena CDN tidak ikut disimpan service worker */
+.offline{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px; margin:0; }
+.offline-kotak{ max-width:440px; padding:2rem; text-align:center; }
+.offline-kotak h1{ font-size:1.35rem; font-weight:700; margin:1rem 0 .75rem; }
+.offline-kotak p{ color:var(--ink-2); margin:0 0 .75rem; }
+.offline-tombol{ display:inline-flex; align-items:center; min-height:44px; padding:.5rem 1.5rem; margin-top:.5rem; border-radius:var(--r); background:var(--rose); color:var(--card); font-weight:600; text-decoration:none; }
+.offline-tombol:hover{ background:var(--rose-d); color:var(--card); }
+
 @media print{
   .admin-sidebar, .admin-topbar, .no-print{ display:none !important; }
   .admin-konten{ padding:0; }

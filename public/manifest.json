@@ -1,0 +1,25 @@
+{
+  "name": "Deepsea Florist — Panel Admin",
+  "short_name": "Deepsea Admin",
+  "description": "Pencatatan pesanan, stok bahan, dan laporan Deepsea Florist Home Store.",
+  "id": "/admin",
+  "start_url": "/admin",
+  "scope": "/admin",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "id",
+  "dir": "ltr",
+  "background_color": "#FBF8F7",
+  "theme_color": "#B23A57",
+  "icons": [
+    { "src": "/img/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/pwa/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/img/pwa/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/img/pwa/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Pesanan baru", "url": "/admin/pesanan/create", "icons": [{ "src": "/img/pwa/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Daftar pesanan", "url": "/admin/pesanan", "icons": [{ "src": "/img/pwa/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Bahan & stok", "url": "/admin/bahan", "icons": [{ "src": "/img/pwa/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

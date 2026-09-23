@@ -29,6 +29,9 @@ Route::get('/tentang', [TentangController::class, '__invoke'])->name('publik.ten
 Route::get('/kontak', [KontakController::class, '__invoke'])->name('publik.kontak');
 Route::get('/faq', FaqController::class)->name('publik.faq');
 
+// Halaman cadangan PWA admin, disimpan service worker (docs/10-PWA-ADMIN.md)
+Route::view('/offline', 'admin.offline')->name('offline');
+
 // Dibuat dari database supaya tidak basi (docs/08-SEO.md A6)
 Route::get('/sitemap.xml', fn () => response()
     ->view('publik.sitemap', [
