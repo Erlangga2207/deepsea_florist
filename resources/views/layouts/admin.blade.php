@@ -13,6 +13,7 @@
         ['admin.pengeluaran.index', 'Pengeluaran', 'M3 6h18v12H3zM3 10h18M7 15h3', true],
         ['admin.laporan.index', 'Laporan', 'M4 20V10M10 20V4M16 20v-7M22 20H2', true],
         ['admin.pengguna.index', 'Pengguna', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21a7 7 0 0 1 14 0M17 11a3 3 0 1 0 0-6M22 21a6 6 0 0 0-4-5.7', true],
+        ['admin.faq.index', 'FAQ', 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01', true],
         ['admin.pengaturan.edit', 'Pengaturan', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM4 6h4M16 6h4M4 18h4M16 18h4M12 3v3M12 18v3', true],
     ];
     $isOwner = auth()->user()->role === 'owner';

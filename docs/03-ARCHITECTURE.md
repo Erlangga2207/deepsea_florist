@@ -207,6 +207,9 @@ Di Blade, sembunyikan menunya dengan `@if(auth()->user()->role === 'owner')`.
 GET  /                         publik.beranda
 GET  /katalog                  publik.katalog
 GET  /katalog/{produk:slug}    publik.detail
+GET  /tentang                  publik.tentang
+GET  /kontak                   publik.kontak
+GET  /faq                      publik.faq
 
 GET  /admin                    admin.dashboard
 resource /admin/pesanan
@@ -223,5 +226,6 @@ GET  /admin/laporan
 GET  /admin/laporan/cetak              (dompdf)
 GET  /admin/daftar-belanja
 resource /admin/pengguna
+resource /admin/faq            (owner, tanpa show)
 GET/PUT /admin/pengaturan
 ```

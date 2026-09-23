@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BahanController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\MutasiStokController;
@@ -12,7 +13,10 @@ use App\Http\Controllers\Admin\PesananController;
 use App\Http\Controllers\Admin\ProdukController;
 use App\Http\Controllers\Admin\StokProdukJadiController;
 use App\Http\Controllers\Publik\BerandaController;
+use App\Http\Controllers\Publik\FaqController;
 use App\Http\Controllers\Publik\KatalogController;
+use App\Http\Controllers\Publik\KontakController;
+use App\Http\Controllers\Publik\TentangController;
 use App\Models\Kategori;
 use App\Models\Produk;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +25,9 @@ Route::get('/', BerandaController::class)->name('publik.beranda');
 Route::get('/katalog', [KatalogController::class, 'index'])->name('publik.katalog');
 Route::get('/katalog/kategori/{kategori:slug}', [KatalogController::class, 'kategori'])->name('publik.kategori');
 Route::get('/katalog/{produk:slug}', [KatalogController::class, 'detail'])->name('publik.detail');
+Route::get('/tentang', [TentangController::class, '__invoke'])->name('publik.tentang');
+Route::get('/kontak', [KontakController::class, '__invoke'])->name('publik.kontak');
+Route::get('/faq', FaqController::class)->name('publik.faq');
 
 // Dibuat dari database supaya tidak basi (docs/08-SEO.md A6)
 Route::get('/sitemap.xml', fn () => response()
@@ -59,6 +66,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
         Route::resource('pengeluaran', PengeluaranController::class)->except('show');
         Route::resource('pengguna', PenggunaController::class)->except(['show', 'destroy']);
+        Route::resource('faq', AdminFaqController::class)->except('show');
         Route::get('pengaturan', [PengaturanController::class, 'edit'])->name('pengaturan.edit');
         Route::put('pengaturan', [PengaturanController::class, 'update'])->name('pengaturan.update');
     });

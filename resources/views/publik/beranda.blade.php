@@ -68,9 +68,8 @@
     <section class="container py-4" id="tentang">
         <div class="kotak p-4 p-lg-5">
             <h2 class="h3">Tentang {{ $pengaturan->nama_toko }}</h2>
-            <p class="text-ink-2 mb-0" style="max-width:65ch">
-                {{ $pengaturan->tentang ?: 'Toko bunga rumahan di Cinangsi, Cibogo, Subang. Merangkai buket dan bunga papan untuk wisuda, ulang tahun, pernikahan, dan pembukaan usaha di Subang dan sekitarnya.' }}
-            </p>
+            <p class="text-ink-2" style="max-width:65ch">Kami toko bunga rumahan di Cibogo yang merangkai buket dan bunga papan dengan tangan sendiri. Pesanan bisa diambil di toko atau diantar ke sekitar Subang.</p>
+            <a href="{{ route('publik.tentang') }}">Selengkapnya tentang kami</a>
         </div>
     </section>
 @endsection

@@ -34,6 +34,15 @@ class Pengaturan extends Model
         return 'https://wa.me/'.$this->no_wa.'?text='.rawurlencode($pesan);
     }
 
+    // Koordinat kalau sudah diisi. Kalau belum, pakai alamat tanpa RT/RW
+    // (Google tidak mengenali RT/RW, petanya jadi kosong). Titiknya baru setingkat jalan.
+    public function lokasiPeta(): string
+    {
+        return $this->latitude && $this->longitude
+            ? $this->latitude.','.$this->longitude
+            : preg_replace('#\s*RT\.?\s*\d+\s*/\s*RW\.?\s*\d+,?#i', '', $this->alamat);
+    }
+
     public static function pesanProduk(Produk $produk): string
     {
         return "Halo Deepsea Florist, saya mau tanya {$produk->nama} ({$produk->kode}) yang ada di website. Untuk tanggal …";

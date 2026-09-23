@@ -75,6 +75,25 @@ Jalankan manual di browser. Belum perlu tes otomatis.
 | G4 | Buka detail DF-014, klik tombol WhatsApp | Membuka `wa.me` dengan pesan berisi "Buket Mawar Biru Navy (DF-014)" |
 | G5 | Ubah `link_ig` di Pengaturan | Link di footer ikut berubah tanpa menyentuh Blade |
 | G6 | Buka beranda di lebar 400px | Tidak ada yang meluber ke samping |
+| G7 | Buka `/tentang` | Halaman terbuka, judul dan meta description berbeda dari beranda |
+| G8 | Buka `/kontak` | Alamat, jam buka, tombol WhatsApp, dan peta tampil |
+| G9 | Ubah kolom "tentang" di panel Pengaturan | Isi halaman `/tentang` ikut berubah tanpa menyentuh Blade |
+| G10 | Buka `/sitemap.xml` | `/tentang` dan `/kontak` ikut terdaftar |
+| G11 | Buka beranda di lebar 400px | Keempat menu (Beranda, Katalog, Tentang, Kontak) terlihat dan bisa diklik |
+
+## F. FAQ dan latar Tentang (dari `docs/09-FAQ-DAN-HERO.md`)
+
+| # | Periksa | Hasil yang benar |
+|---|---|---|
+| F1 | Buka `/faq` | 12 pertanyaan tampil, semua bisa dibuka-tutup |
+| F2 | Matikan JavaScript, muat ulang `/faq` | Accordion tetap berfungsi dan jawaban tetap terbaca |
+| F3 | Lihat source `/faq` | Seluruh teks jawaban ada di HTML, bukan dimuat JavaScript |
+| F4 | Tambah satu FAQ lewat panel admin | Langsung muncul di `/faq` dan ikut masuk data terstruktur |
+| F5 | Nonaktifkan satu FAQ | Hilang dari halaman dan dari schema |
+| F6 | Buka `/sitemap.xml` | URL `/faq` terdaftar |
+| F7 | Buka `/tentang` | Latar foto tampil, judul terbaca jelas |
+| F8 | Buka `/tentang` di lebar 400px | Memakai berkas mobile, teks tidak menumpuk foto |
+| F9 | Periksa jaringan di DevTools | Yang dimuat berkas `.webp`, bukan `.jpg` |
 
 ## H. Laporan
 

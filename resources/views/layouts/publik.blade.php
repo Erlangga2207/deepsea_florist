@@ -50,8 +50,11 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('publik.katalog', 'publik.kategori', 'publik.detail') ? 'aktif' : '' }}" href="{{ route('publik.katalog') }}">Katalog</a>
                 </li>
-                <li class="nav-item d-none d-md-block">
-                    <a class="nav-link" href="{{ route('publik.beranda') }}#tentang">Tentang</a>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('publik.tentang') ? 'aktif' : '' }}" href="{{ route('publik.tentang') }}">Tentang</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('publik.kontak') ? 'aktif' : '' }}" href="{{ route('publik.kontak') }}">Kontak</a>
                 </li>
             </ul>
             <a href="{{ $pengaturan->linkWa() }}" class="btn btn-primary btn-sm d-none d-sm-inline-flex align-items-center gap-1" target="_blank" rel="noopener">
@@ -91,7 +94,9 @@
                     <ul class="list-unstyled small mb-0">
                         <li><a href="{{ route('publik.katalog') }}">Katalog</a></li>
                         <li><a href="{{ route('publik.beranda') }}#cara-pesan">Cara memesan</a></li>
-                        <li><a href="{{ route('publik.beranda') }}#tentang">Tentang kami</a></li>
+                        <li><a href="{{ route('publik.tentang') }}">Tentang kami</a></li>
+                        <li><a href="{{ route('publik.kontak') }}">Kontak</a></li>
+                        <li><a href="{{ route('publik.faq') }}">FAQ</a></li>
                     </ul>
                 </div>
             </div>

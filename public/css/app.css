@@ -142,6 +142,59 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
 .publik-header{ background:var(--card); border-bottom:1px solid var(--line); }
 .publik-header .nav-link{ color:var(--ink-2); font-weight:600; }
 .publik-header .nav-link:hover, .publik-header .nav-link.aktif{ color:var(--rose); }
+@media (max-width:575.98px){ .publik-header .nav-link{ padding-inline:.5rem; } }
+.peta{ display:block; width:100%; aspect-ratio:4/3; border:1px solid var(--line); border-radius:var(--r); background:var(--line-2); }
+
+/* Halaman Tentang & Kontak */
+.cerita{ font-size:1.15rem; color:var(--ink-2); max-width:60ch; }
+.cerita p:last-child{ margin-bottom:0; }
+.fakta{ display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin:0; padding:1.5rem 0; border-bottom:1px solid var(--line); text-align:center; }
+.fakta dd{ margin:0; font-size:clamp(1.3rem, 4vw, 2rem); color:var(--rose-d); }
+.fakta > div{ display:flex; flex-direction:column-reverse; }
+.fakta dt{ color:var(--ink-2); font-weight:600; font-size:.9rem; }
+
+/* Hero Tentang: foto → lapisan --bg 0.72 → teks. Tanpa background-attachment:fixed. */
+.tentang-hero{
+  position:relative; padding-block:5rem;
+  background-color:var(--line-2);
+  background-image:url('/img/tentang-hero-mobile.jpg');
+  background-image:image-set(url('/img/tentang-hero-mobile.webp') type('image/webp'), url('/img/tentang-hero-mobile.jpg') type('image/jpeg'));
+  background-size:cover; background-position:center;
+}
+@media (min-width:768px){
+  .tentang-hero{
+    background-image:url('/img/tentang-hero.jpg');
+    background-image:image-set(url('/img/tentang-hero.webp') type('image/webp'), url('/img/tentang-hero.jpg') type('image/jpeg'));
+  }
+}
+.tentang-hero::before{ content:""; position:absolute; inset:0; background:var(--bg); opacity:.72; }
+.tentang-hero-isi{ position:relative; }
+.tentang-hero h1{ color:var(--ink); }
+.tentang-hero .cerita{ color:var(--ink); }
+
+/* FAQ: <details> bawaan, jawaban sudah ada di HTML */
+.faq-item{ background:var(--card); border:1px solid var(--line); border-top:0; }
+.faq-item:first-child{ border-top:1px solid var(--line); border-radius:var(--r) var(--r) 0 0; }
+.faq-item:last-child{ border-radius:0 0 var(--r) var(--r); }
+.faq-item summary{ display:flex; align-items:center; justify-content:space-between; gap:1rem; min-height:56px; padding:.9rem 1.25rem; cursor:pointer; list-style:none; }
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary h2{ font-family:var(--font-ui); font-weight:700; font-size:1.05rem; line-height:1.4; }
+.faq-item summary:hover h2{ color:var(--rose-d); }
+.faq-panah{ flex-shrink:0; color:var(--ink-2); transition:transform .2s; }
+.faq-item[open] .faq-panah{ transform:rotate(180deg); }
+.faq-jawaban{ padding:0 1.25rem 1.1rem; color:var(--ink-2); max-width:70ch; }
+@media (prefers-reduced-motion:reduce){ .faq-panah{ transition:none; } }
+.daftar-garis > div{ padding:1.25rem 0; border-top:1px solid var(--line); }
+.daftar-garis > div:first-child{ padding-top:0; border-top:0; }
+.daftar-kategori{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:.75rem; }
+.daftar-kategori a{ display:flex; justify-content:space-between; align-items:center; gap:1rem; min-height:56px; padding:.75rem 1rem; background:var(--card); border:1px solid var(--line); border-radius:var(--r); color:var(--ink); text-decoration:none; }
+.daftar-kategori a:hover{ border-color:var(--rose); color:var(--rose-d); }
+.info-kontak{ margin:0 0 1.5rem; }
+.info-kontak > div{ display:grid; grid-template-columns:8rem 1fr; gap:1rem; padding:.9rem 0; border-bottom:1px solid var(--line); }
+.info-kontak > div:first-child{ border-top:1px solid var(--line); }
+.info-kontak dt{ color:var(--ink-2); font-weight:600; }
+.info-kontak dd{ margin:0; }
+@media (max-width:575.98px){ .info-kontak > div{ grid-template-columns:1fr; gap:.15rem; } }
 .publik-footer{ border-top:1px solid var(--line); color:var(--ink-2); background:var(--card); }
 .publik-footer a{ color:var(--ink-2); }
 .publik-footer a:hover{ color:var(--rose); }

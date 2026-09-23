@@ -37,5 +37,7 @@ class ProduksiSeeder extends Seeder
         foreach ($kategori as $i => [$nama, $slug, $tipe]) {
             Kategori::firstOrCreate(['slug' => $slug], ['nama' => $nama, 'tipe_harga' => $tipe, 'urutan' => $i + 1]);
         }
+
+        $this->call(FaqSeeder::class);
     }
 }
