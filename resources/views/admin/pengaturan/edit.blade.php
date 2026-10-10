@@ -11,11 +11,9 @@
         @csrf @method('PUT')
 
         <x-panel judul="Data toko">
-            <p class="small text-ink-2">Tampil di halaman publik: header, footer, dan tombol WhatsApp.</p>
+            <p class="small text-ink-2">Tampil di halaman publik: header, footer, dan tombol WhatsApp.
+                Alamat dan titik peta diatur di menu <a href="{{ route('admin.cabang.index') }}">Cabang</a>.</p>
             <x-field label="Nama toko" name="nama_toko" :value="$pengaturan->nama_toko" wajib />
-            <x-field label="Alamat" name="alamat">
-                <textarea id="alamat" name="alamat" rows="2" class="form-control">{{ old('alamat', $pengaturan->alamat) }}</textarea>
-            </x-field>
             <div class="row">
                 <x-field class="col-sm-6" label="Jam buka" name="jam_buka" :value="$pengaturan->jam_buka" />
                 <x-field class="col-sm-6" label="Nomor WhatsApp" name="no_wa" :value="$pengaturan->no_wa" inputmode="numeric" wajib
@@ -51,11 +49,6 @@
             <x-field label="Deskripsi default" name="meta_deskripsi_default" hint="Maksimal 160 karakter.">
                 <textarea id="meta_deskripsi_default" name="meta_deskripsi_default" rows="2" maxlength="160" class="form-control">{{ old('meta_deskripsi_default', $pengaturan->meta_deskripsi_default) }}</textarea>
             </x-field>
-            <div class="row">
-                <x-field class="col-sm-6" label="Latitude kios" name="latitude" type="number" step="0.0000001" :value="$pengaturan->latitude" />
-                <x-field class="col-sm-6" label="Longitude kios" name="longitude" type="number" step="0.0000001" :value="$pengaturan->longitude" />
-            </div>
-            <x-field label="Link Google Bisnis Profil" name="google_maps_url" type="url" :value="$pengaturan->google_maps_url" />
         </x-panel>
 
         <button type="submit" class="btn btn-primary">Simpan pengaturan</button>

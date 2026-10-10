@@ -1,6 +1,6 @@
 # Rancangan Database
 
-14 tabel. Semua nama tabel dan kolom memakai bahasa Indonesia. Engine InnoDB, charset `utf8mb4`.
+15 tabel. Semua nama tabel dan kolom memakai bahasa Indonesia. Engine InnoDB, charset `utf8mb4`.
 
 Urutan migrasi penting karena foreign key — ikuti urutan di bawah.
 
@@ -213,7 +213,6 @@ Satu baris saja (id = 1). Dibuat oleh seeder.
 |---|---|---|
 | id | bigint PK | 1 |
 | nama_toko | varchar | Deepsea Florist Home Store |
-| alamat | text | Jl. Raya Cinangsi RT.01/RW.01, Cinangsi, Kec. Cibogo, Kabupaten Subang 41211 |
 | jam_buka | varchar | Senin–Sabtu, 08.00–17.00 |
 | no_wa | varchar | 6281296836363 |
 | link_ig | varchar | |
@@ -225,6 +224,37 @@ Satu baris saja (id = 1). Dibuat oleh seeder.
 | tarif_jasa_per_jam | decimal(12,2) | 10000 |
 
 > Link media sosial **wajib** diambil dari tabel ini, jangan ditulis langsung di Blade. Nama akun Instagram mitra akan berganti.
+
+> `alamat`, `latitude`, `longitude`, dan `google_maps_url` **sudah dipindah** ke tabel `cabang` (cabang utama) lewat migrasi `create_cabang_table`. Jangan ditambahkan lagi di sini.
+>
+> `no_wa` selalu disimpan berawalan `62` (mutator di model, trait `NomorWa`).
+
+## 15. cabang
+
+Lokasi toko untuk halaman publik saja: halaman Kontak, footer, JSON-LD, dan kop laporan. **Bukan** cabang operasional. Stok, pesanan, dan kapasitas tetap terpusat di rumah produksi, jadi jangan menambahkan `cabang_id` ke tabel lain.
+
+| Kolom | Tipe | Keterangan |
+|---|---|---|
+| id | bigint PK | |
+| nama | varchar(100) | |
+| alamat | text | |
+| latitude | decimal(10,7) | diisi owner lewat satu field "Koordinat" (`-6.5312, 107.7234`) |
+| longitude | decimal(10,7) | |
+| url_maps | varchar nullable | hanya https dari google.com/maps, maps.google.com, goo.gl/maps, maps.app.goo.gl |
+| no_wa | varchar(20) nullable | disimpan `62…` |
+| jam_buka | varchar(150) nullable | teks bebas, mis. "Setiap hari 08.00–20.00" |
+| is_utama | boolean | default false |
+| tampil_di_website | boolean | default true |
+| urutan | unsigned smallint | default 0 |
+| timestamps | | |
+
+Index gabungan `(tampil_di_website, urutan)`.
+
+**Aturan:**
+- Selalu **tepat satu** baris `is_utama = true`. Menjadikan cabang lain utama otomatis melepas yang lama, di dalam `DB::transaction`.
+- Cabang utama tidak boleh dihapus atau `tampil_di_website = false`.
+- Alamat & koordinat toko hanya dibaca dari cabang utama, tidak ada sumber kedua.
+- Hanya role `owner` yang mengelola (route di group middleware `owner`).
 
 ---
 
@@ -240,6 +270,7 @@ pesanan  1─* mutasi_stok
 pesanan  1─* stok_produk_jadi
 pengeluaran 1─* mutasi_stok
 users    1─* pesanan, pengeluaran, mutasi_stok
+cabang   (berdiri sendiri, tanpa relasi)
 ```
 
 ## Catatan implementasi

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
+use App\Models\Cabang;
 use App\Models\Pengaturan;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
@@ -34,8 +35,13 @@ class AppServiceProvider extends ServiceProvider
 
         // Data toko tersedia di semua halaman publik tanpa dikirim dari tiap controller
         View::composer(['layouts.publik', 'publik.*', 'components.seo', 'components.kartu-produk'], function ($view) {
-            static $pengaturan;
-            $view->with('pengaturan', $pengaturan ??= Pengaturan::ambil());
+            static $pengaturan, $cabang;
+            $cabang ??= Cabang::tampil()->urut()->get();
+            $view->with([
+                'pengaturan' => $pengaturan ??= Pengaturan::ambil(),
+                'cabang' => $cabang,
+                'cabangUtama' => $cabang->firstWhere('is_utama', true),
+            ]);
         });
 
         // @rupiah(158000) → Rp 158.000

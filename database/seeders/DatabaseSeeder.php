@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Domain\Stok\MutasiStokService;
 use App\Models\Bahan;
+use App\Models\Cabang;
 use App\Models\Kategori;
 use App\Models\Pelanggan;
 use App\Models\Pengeluaran;
@@ -38,6 +39,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(ProduksiSeeder::class);
+
+        // Data CONTOH untuk demo multi lokasi — ganti/hapus lewat menu Cabang sebelum dipakai sungguhan
+        Cabang::create([
+            'nama' => 'Cabang toko (CONTOH)',
+            'alamat' => 'CONTOH — alamat cabang toko belum diisi. Kota Subang, Jawa Barat',
+            'latitude' => -6.5713,
+            'longitude' => 107.7587,
+            'no_wa' => '0812 0000 0000',
+            'jam_buka' => 'Setiap hari 09.00–20.00',
+            'urutan' => 1,
+        ]);
         $this->produk();
         $this->bahanDanKomposisi();
         $pengeluaran = $this->pengeluaran();

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BahanController;
+use App\Http\Controllers\Admin\CabangController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\KategoriController;
@@ -70,6 +71,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('pengeluaran', PengeluaranController::class)->except('show');
         Route::resource('pengguna', PenggunaController::class)->except(['show', 'destroy']);
         Route::resource('faq', AdminFaqController::class)->except('show');
+        Route::resource('cabang', CabangController::class)->except('show');
         Route::get('pengaturan', [PengaturanController::class, 'edit'])->name('pengaturan.edit');
         Route::put('pengaturan', [PengaturanController::class, 'update'])->name('pengaturan.update');
     });

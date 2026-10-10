@@ -198,7 +198,7 @@ Ditangani `PesananController@ubahStatus`:
 
 ## 7. Hak akses
 
-Middleware `RoleOwner` dipasang pada group route: `laporan`, `pengeluaran`, `pengguna`, `pengaturan`.
+Middleware `RoleOwner` dipasang pada group route: `laporan`, `pengeluaran`, `pengguna`, `faq`, `cabang`, `pengaturan`.
 Di Blade, sembunyikan menunya dengan `@if(auth()->user()->role === 'owner')`.
 
 ## 8. Route (ringkasan)
@@ -228,5 +228,6 @@ GET  /admin/laporan/cetak              (dompdf)
 GET  /admin/daftar-belanja
 resource /admin/pengguna
 resource /admin/faq            (owner, tanpa show)
+resource /admin/cabang         (owner, tanpa show)
 GET/PUT /admin/pengaturan
 ```

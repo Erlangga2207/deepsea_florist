@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cabang;
 use App\Models\Kategori;
 use App\Models\Pengaturan;
 use Illuminate\Database\Seeder;
@@ -14,7 +15,6 @@ class ProduksiSeeder extends Seeder
     {
         Pengaturan::firstOrCreate(['id' => 1], [
             'nama_toko' => 'Deepsea Florist Home Store',
-            'alamat' => 'Jl. Raya Cinangsi RT.01/RW.01, Cinangsi, Kec. Cibogo, Kabupaten Subang 41211',
             'jam_buka' => 'Senin–Sabtu, 08.00–17.00',
             'no_wa' => '6281296836363',
             'jumlah_perakit' => 3,
@@ -24,6 +24,20 @@ class ProduksiSeeder extends Seeder
             'meta_judul_default' => 'Deepsea Florist — Toko Bunga & Buket di Subang',
             'meta_deskripsi_default' => 'Toko bunga di Cibogo, Subang. Buket wisuda, buket fresh dan artificial, buket uang, buket snack, dan bunga papan. Pesan lewat WhatsApp.',
         ]);
+
+        // Satu-satunya sumber alamat toko. Koordinat masih perkiraan setingkat kecamatan:
+        // owner wajib mengoreksi lewat menu Cabang (tekan lama titik toko di Google Maps).
+        if (! Cabang::where('is_utama', true)->exists()) {
+            Cabang::create([
+                'nama' => 'Deepsea Florist — Rumah produksi',
+                'alamat' => 'Jl. Raya Cinangsi RT.01/RW.01, Cinangsi, Kec. Cibogo, Kabupaten Subang 41211',
+                'latitude' => -6.5236,
+                'longitude' => 107.8020,
+                'jam_buka' => 'Senin–Sabtu, 08.00–17.00',
+                'is_utama' => true,
+                'tampil_di_website' => true,
+            ]);
+        }
 
         $kategori = [
             ['Buket artificial', 'buket-artificial', 'artificial'],

@@ -8,30 +8,34 @@
         <x-seo />
     @endif
 
-    {{-- Data terstruktur: memberi tahu Google ini toko fisik di Subang --}}
+    {{-- Data terstruktur: memberi tahu Google ini toko fisik di Subang. Alamat dari cabang utama, cabang lain jadi department.
+         Tulis '@@context' (dua @): satu @ dibaca Blade sebagai direktif @@context dan JSON-nya rusak. --}}
+    @php
+        $lokasiLd = fn ($c) => $c ? [
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => $c->alamat,
+                'addressLocality' => 'Subang',
+                'addressRegion' => 'Jawa Barat',
+                'addressCountry' => 'ID',
+            ],
+            'geo' => ['@type' => 'GeoCoordinates', 'latitude' => (float) $c->latitude, 'longitude' => (float) $c->longitude],
+        ] : [];
+        $cabangLain = $cabang->reject(fn ($c) => $c->is_utama)->values();
+    @endphp
     <script type="application/ld+json">
         {!! json_encode(array_filter([
-            '@context' => 'https://schema.org',
+            '@@context' => 'https://schema.org',
             '@type' => 'Florist',
             'name' => $pengaturan->nama_toko,
             'image' => asset('img/logo.png'),
             'url' => url('/'),
             'telephone' => '+'.$pengaturan->no_wa,
-            'address' => [
-                '@type' => 'PostalAddress',
-                'streetAddress' => $pengaturan->alamat,
-                'addressLocality' => 'Subang',
-                'addressRegion' => 'Jawa Barat',
-                'addressCountry' => 'ID',
-            ],
-            'geo' => $pengaturan->latitude && $pengaturan->longitude ? [
-                '@type' => 'GeoCoordinates',
-                'latitude' => (float) $pengaturan->latitude,
-                'longitude' => (float) $pengaturan->longitude,
-            ] : null,
-            'hasMap' => $pengaturan->google_maps_url,
+            ...$lokasiLd($cabangUtama),
+            'hasMap' => $cabangUtama?->url_maps,
             'areaServed' => ['Subang', 'Cibogo', 'Pagaden', 'Pamanukan'],
             'sameAs' => array_values(array_filter([$pengaturan->link_ig, $pengaturan->link_tiktok])) ?: null,
+            'department' => $cabangLain->map(fn ($c) => ['@type' => 'Florist', 'name' => $c->nama, ...$lokasiLd($c)])->all() ?: null,
         ]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
     @stack('kepala')
@@ -72,10 +76,12 @@
             <div class="row g-4">
                 <div class="col-6 col-lg-4">
                     <div class="fw-bold text-body mb-2">{{ $pengaturan->nama_toko }}</div>
-                    <p class="small mb-0">{{ $pengaturan->alamat }}</p>
-                    @if ($pengaturan->google_maps_url)
-                        <a href="{{ $pengaturan->google_maps_url }}" class="small" target="_blank" rel="noopener">Lihat di Google Maps</a>
-                    @endif
+                    <ul class="list-unstyled small mb-0">
+                        @foreach ($cabang as $c)
+                            <li class="mb-2"><span class="fw-semibold">{{ $c->nama }}</span><br>{{ $c->alamat }}</li>
+                        @endforeach
+                    </ul>
+                    <a href="{{ route('publik.kontak') }}" class="small">Lihat peta lokasi</a>
                 </div>
                 <div class="col-6 col-lg-2">
                     <div class="fw-bold text-body mb-2">Jam buka</div>

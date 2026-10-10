@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Domain\Laporan\LaporanKeuangan;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LaporanRequest;
+use App\Models\Cabang;
 use App\Models\Pengaturan;
 use App\Models\Pengeluaran;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -23,6 +24,7 @@ class LaporanController extends Controller
         $data = $laporan->untuk($request->dari(), $request->sampai()) + [
             'kategori' => Pengeluaran::KATEGORI,
             'pengaturan' => Pengaturan::ambil(),
+            'cabangUtama' => Cabang::utama(),
         ];
 
         $nama = 'laporan-'.$data['dari']->toDateString().'-sd-'.$data['sampai']->toDateString().'.pdf';

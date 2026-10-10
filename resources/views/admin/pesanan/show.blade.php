@@ -161,12 +161,12 @@
                                 <input type="number" min="1" step="1" max="{{ $sisa }}" inputmode="numeric" id="jumlah" name="jumlah"
                                        class="form-control angka @error('jumlah') is-invalid @enderror" required
                                        value="{{ old('jumlah', $pesanan->pembayaran->isEmpty() ? $nominalDp : $sisa) }}">
-                                <div class="d-flex gap-1 mt-1">
-                                    @if ($pesanan->pembayaran->isEmpty())
+                                @if ($pesanan->pembayaran->isEmpty())
+                                    <div class="d-flex gap-1 mt-1">
                                         <button type="button" class="btn btn-sm btn-garis py-0" onclick="document.getElementById('jumlah').value = {{ $nominalDp }}">DP 50%</button>
-                                    @endif
-                                    <button type="button" class="btn btn-sm btn-garis py-0" onclick="document.getElementById('jumlah').value = {{ $sisa }}">Lunas</button>
-                                </div>
+                                        <button type="button" class="btn btn-sm btn-garis py-0" onclick="document.getElementById('jumlah').value = {{ $sisa }}">Lunas</button>
+                                    </div>
+                                @endif
                                 @error('jumlah')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror

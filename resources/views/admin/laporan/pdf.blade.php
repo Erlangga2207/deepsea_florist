@@ -23,7 +23,7 @@
 <body>
     <div class="kop">
         <h1>{{ $pengaturan->nama_toko }}</h1>
-        <div>{{ $pengaturan->alamat }} · WA {{ preg_replace('/^62/', '0', $pengaturan->no_wa) }}</div>
+        <div>{{ $cabangUtama?->alamat }} · WA {{ preg_replace('/^62/', '0', $pengaturan->no_wa) }}</div>
     </div>
 
     <strong style="font-size:14px">Laporan Keuangan</strong><br>

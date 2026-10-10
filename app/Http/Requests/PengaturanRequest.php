@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Pengaturan;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PengaturanRequest extends FormRequest
@@ -10,7 +11,6 @@ class PengaturanRequest extends FormRequest
     {
         return [
             'nama_toko' => ['required', 'string', 'max:150'],
-            'alamat' => ['nullable', 'string'],
             'jam_buka' => ['nullable', 'string', 'max:100'],
             'no_wa' => ['required', 'regex:/^62\d{8,13}$/'],
             'link_ig' => ['nullable', 'url', 'max:255'],
@@ -22,27 +22,20 @@ class PengaturanRequest extends FormRequest
             'tarif_jasa_per_jam' => ['required', 'numeric', 'min:0'],
             'meta_judul_default' => ['nullable', 'string', 'max:70'],
             'meta_deskripsi_default' => ['nullable', 'string', 'max:160'],
-            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
-            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'google_maps_url' => ['nullable', 'url', 'max:255'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'no_wa.regex' => 'Tulis nomor WhatsApp diawali 62 tanpa spasi atau tanda +, contoh 6281296836363.',
+            'no_wa.required' => 'Nomor WhatsApp wajib diisi.',
+            'no_wa.regex' => 'Nomor WhatsApp tidak valid. Contoh: 0812 9683 6363 atau 6281296836363.',
         ];
     }
 
-    // Owner biasa menulis 0812…, ubah otomatis jadi 62812…
+    // Owner biasa menulis 0812… atau +62 812…, ubah otomatis jadi 62812…
     protected function prepareForValidation(): void
     {
-        $wa = preg_replace('/\D/', '', (string) $this->input('no_wa'));
-        if (str_starts_with($wa, '0')) {
-            $wa = '62'.substr($wa, 1);
-        }
-
-        $this->merge(['no_wa' => $wa]);
+        $this->merge(['no_wa' => Pengaturan::normalisasiWa($this->input('no_wa'))]);
     }
 }

@@ -41,9 +41,8 @@ Tambahkan kolom berikut. Ini melengkapi `docs/02-DATABASE.md`, bukan menggantika
 |---|---|---|
 | meta_judul_default | varchar | Deepsea Florist — Toko Bunga & Buket di Subang |
 | meta_deskripsi_default | text | Toko bunga di Cibogo, Subang. Buket wisuda, buket fresh dan artificial, buket uang, buket snack, dan bunga papan. Pesan lewat WhatsApp. |
-| latitude | decimal(10,7) | koordinat kios, diisi dari Google Maps |
-| longitude | decimal(10,7) | koordinat kios |
-| google_maps_url | varchar nullable | link Google Bisnis Profil |
+
+> `latitude`, `longitude`, dan `google_maps_url` dulu ada di sini, sekarang **pindah ke tabel `cabang`** (cabang utama). Lihat `docs/02-DATABASE.md` bagian 15. JSON-LD di bawah membaca `address`/`geo` dari cabang utama, dan cabang lain masuk sebagai `department`.
 
 **Tabel `produk`** (tambahan):
 

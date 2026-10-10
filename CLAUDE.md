@@ -59,6 +59,7 @@ Ini hasil wawancara dengan pemilik. Jangan diubah tanpa persetujuan.
 8. **Karyawan tidak bisa** melihat laporan keuangan, pengeluaran, dan manajemen pengguna.
 9. **Kontak pelanggan boleh kosong.** Jangan dijadikan field wajib — saat ramai, form yang rewel bikin owner balik nyatat di kertas.
 10. **Peringatan tidak memblokir.** Bahan kurang dan tanggal penuh hanya memberi tahu; tombol simpan tetap aktif. Yang memutuskan tetap manusia.
+11. **Alamat & koordinat toko hanya bersumber dari tabel `cabang`** (cabang utama), bukan dari `pengaturan`. Selalu tepat satu cabang utama; cabang utama tidak boleh dihapus atau disembunyikan dari website.
 
 ## Yang sengaja TIDAK dibuat
 
@@ -68,7 +69,7 @@ Jangan menambahkan ini walaupun kelihatan "melengkapi":
 - Chatbot, rekomendasi berbasis AI/ML
 - Aplikasi mobile terpisah
 - Integrasi API WhatsApp / Instagram / TikTok (cukup link `wa.me` biasa)
-- Multi-cabang, multi-tenant
+- Multi-cabang operasional (stok, pesanan, atau kapasitas per cabang). Cabang hanya sebagai data lokasi publik di tabel `cabang`.
 - Notifikasi email/SMS
 
 ## Perintah yang sering dipakai

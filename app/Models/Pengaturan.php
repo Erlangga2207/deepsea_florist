@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\NomorWa;
 use Illuminate\Database\Eloquent\Model;
 
-// Hanya satu baris (id = 1).
+// Hanya satu baris (id = 1). Alamat & koordinat ada di tabel cabang (cabang utama).
 class Pengaturan extends Model
 {
+    use NomorWa;
+
     protected $table = 'pengaturan';
 
     protected $guarded = ['id'];
@@ -18,8 +21,6 @@ class Pengaturan extends Model
             'jam_kerja_per_hari' => 'decimal:2',
             'margin_default' => 'decimal:2',
             'tarif_jasa_per_jam' => 'decimal:2',
-            'latitude' => 'decimal:7',
-            'longitude' => 'decimal:7',
         ];
     }
 
@@ -32,15 +33,6 @@ class Pengaturan extends Model
     public function linkWa(string $pesan = 'Halo Deepsea Florist, saya mau tanya buket.'): string
     {
         return 'https://wa.me/'.$this->no_wa.'?text='.rawurlencode($pesan);
-    }
-
-    // Koordinat kalau sudah diisi. Kalau belum, pakai alamat tanpa RT/RW
-    // (Google tidak mengenali RT/RW, petanya jadi kosong). Titiknya baru setingkat jalan.
-    public function lokasiPeta(): string
-    {
-        return $this->latitude && $this->longitude
-            ? $this->latitude.','.$this->longitude
-            : preg_replace('#\s*RT\.?\s*\d+\s*/\s*RW\.?\s*\d+,?#i', '', $this->alamat);
     }
 
     public static function pesanProduk(Produk $produk): string
