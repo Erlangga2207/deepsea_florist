@@ -23,7 +23,7 @@
                     </select>
                 </x-field>
             </div>
-            <x-field label="Nominal (Rp)" name="nominal" type="number" min="1" step="500" :value="$pengeluaran->nominal ? (int) $pengeluaran->nominal : null" wajib />
+            <x-field label="Nominal (Rp)" name="nominal" type="number" min="1" step="1" :value="$pengeluaran->nominal ? (int) $pengeluaran->nominal : null" wajib />
             <x-field label="Keterangan" name="keterangan" :value="$pengeluaran->keterangan" maxlength="200" placeholder="mis. Kulakan bunga fresh Lembang" />
             <x-field label="Foto nota / bukti" name="bukti" type="file" accept="image/*,application/pdf"
                      :hint="$pengeluaran->bukti ? 'Sudah ada bukti. Pilih file baru untuk mengganti.' : 'Foto nota atau PDF, maksimal 4 MB.'" />

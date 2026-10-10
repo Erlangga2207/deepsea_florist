@@ -118,7 +118,7 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label small" for="harga_jual">Harga jual langsung (boleh kosong)</label>
-                                <input type="number" min="0" step="500" name="harga_jual" id="harga_jual" class="form-control">
+                                <input type="number" min="0" step="1" name="harga_jual" id="harga_jual" class="form-control">
                             </div>
                             <p class="small text-ink-2">DP tetap tercatat sebagai pemasukan (hangus). Bahan yang sudah terpakai tidak dikembalikan ke stok.</p>
                             <button class="btn btn-garis">Ya, batalkan</button>
@@ -154,8 +154,22 @@
                         <div class="row g-2">
                             <div class="col-6">
                                 <label class="form-label small" for="jumlah">{{ $pesanan->pembayaran->isEmpty() ? 'Jumlah (DP atau lunas)' : 'Pelunasan' }}</label>
-                                <input type="number" min="1" step="500" id="jumlah" name="jumlah" class="form-control angka" required
-                                       value="{{ old('jumlah', $pesanan->pembayaran->isEmpty() ? $pesanan->total / 2 : $pesanan->sisaTagihan()) }}">
+                                @php
+                                    $sisa = (int) $pesanan->sisaTagihan();
+                                    $nominalDp = min($sisa, max(1, (int) ceil($pesanan->total / 2) - (int) $pesanan->total_dibayar));
+                                @endphp
+                                <input type="number" min="1" step="1" max="{{ $sisa }}" inputmode="numeric" id="jumlah" name="jumlah"
+                                       class="form-control angka @error('jumlah') is-invalid @enderror" required
+                                       value="{{ old('jumlah', $pesanan->pembayaran->isEmpty() ? $nominalDp : $sisa) }}">
+                                <div class="d-flex gap-1 mt-1">
+                                    @if ($pesanan->pembayaran->isEmpty())
+                                        <button type="button" class="btn btn-sm btn-garis py-0" onclick="document.getElementById('jumlah').value = {{ $nominalDp }}">DP 50%</button>
+                                    @endif
+                                    <button type="button" class="btn btn-sm btn-garis py-0" onclick="document.getElementById('jumlah').value = {{ $sisa }}">Lunas</button>
+                                </div>
+                                @error('jumlah')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-6">
                                 <label class="form-label small" for="metode">Cara bayar</label>
@@ -164,6 +178,9 @@
                                     <option value="qris">QRIS</option>
                                     <option value="cash">Tunai</option>
                                 </select>
+                                @error('metode')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                             <input type="hidden" name="tanggal" value="{{ today()->toDateString() }}">
                             <div class="col-12"><button class="btn btn-garis w-100">Catat pembayaran</button></div>

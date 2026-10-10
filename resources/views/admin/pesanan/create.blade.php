@@ -57,7 +57,7 @@
 
                     <div class="row">
                         <x-field class="col-sm-6" label="Tanggal jadi" name="tanggal_jadi" type="date" :min="today()->toDateString()" wajib />
-                        <x-field class="col-sm-6" label="Harga satuan (Rp)" name="harga" type="number" min="0" step="500" wajib
+                        <x-field class="col-sm-6" label="Harga satuan (Rp)" name="harga" type="number" min="0" step="1" wajib
                                  hint="Terisi dari harga dasar; ubah sesuai kesepakatan." />
                     </div>
 
@@ -76,11 +76,11 @@
                     </div>
                     <div class="row" id="baris-antar">
                         <x-field class="col-sm-8" label="Alamat antar" name="alamat_antar" />
-                        <x-field class="col-sm-4" label="Ongkir (Rp)" name="ongkir" type="number" min="0" step="1000" />
+                        <x-field class="col-sm-4" label="Ongkir (Rp)" name="ongkir" type="number" min="0" step="1" />
                     </div>
 
                     <div class="row">
-                        <x-field class="col-sm-4" label="Biaya tambahan (Rp)" name="biaya_tambahan" type="number" min="0" step="1000"
+                        <x-field class="col-sm-4" label="Biaya tambahan (Rp)" name="biaya_tambahan" type="number" min="0" step="1"
                                  hint="Ukuran custom / kerumitan." />
                         <x-field class="col-sm-8" label="Catatan" name="catatan" placeholder="mis. Wisuda Polsub" />
                     </div>
@@ -88,7 +88,7 @@
 
                 <x-panel judul="DP">
                     <div class="row align-items-start">
-                        <x-field class="col-sm-6" label="DP diterima (Rp)" name="dp_jumlah" type="number" min="0" step="500" hint="" />
+                        <x-field class="col-sm-6" label="DP diterima (Rp)" name="dp_jumlah" type="number" min="0" step="1" hint="" />
                         <x-field class="col-sm-6" label="Cara bayar" name="dp_metode">
                             <select id="dp_metode" name="dp_metode" class="form-select">
                                 <option value="">—</option>

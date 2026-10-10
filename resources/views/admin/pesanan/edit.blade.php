@@ -33,7 +33,7 @@
             <div class="row">
                 <x-field class="col-sm-4" label="Ukuran" name="ukuran" :value="$item->ukuran" />
                 <x-field class="col-sm-4" label="Warna" name="warna" :value="$item->warna" />
-                <x-field class="col-sm-4" label="Harga satuan (Rp)" name="harga" type="number" min="0" step="500" :value="(int) $item->harga" wajib />
+                <x-field class="col-sm-4" label="Harga satuan (Rp)" name="harga" type="number" min="0" step="1" :value="(int) $item->harga" wajib />
             </div>
             <x-field label="Kartu ucapan" name="kartu_ucapan">
                 <textarea id="kartu_ucapan" name="kartu_ucapan" rows="2" class="form-control">{{ old('kartu_ucapan', $item->kartu_ucapan) }}</textarea>
@@ -49,10 +49,10 @@
             </div>
             <div class="row">
                 <x-field class="col-sm-8" label="Alamat antar" name="alamat_antar" :value="$pesanan->alamat_antar" />
-                <x-field class="col-sm-4" label="Ongkir (Rp)" name="ongkir" type="number" min="0" step="1000" :value="(int) $pesanan->ongkir" />
+                <x-field class="col-sm-4" label="Ongkir (Rp)" name="ongkir" type="number" min="0" step="1" :value="(int) $pesanan->ongkir" />
             </div>
             <div class="row">
-                <x-field class="col-sm-4" label="Biaya tambahan (Rp)" name="biaya_tambahan" type="number" min="0" step="1000" :value="(int) $pesanan->biaya_tambahan" />
+                <x-field class="col-sm-4" label="Biaya tambahan (Rp)" name="biaya_tambahan" type="number" min="0" step="1" :value="(int) $pesanan->biaya_tambahan" />
                 <x-field class="col-sm-8" label="Catatan" name="catatan" :value="$pesanan->catatan" />
             </div>
         </x-panel>

@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="row align-items-end">
-                        <x-field class="col-sm-6" label="Harga dasar (Rp)" name="harga_dasar" type="number" min="0" step="500"
+                        <x-field class="col-sm-6" label="Harga dasar (Rp)" name="harga_dasar" type="number" min="0" step="1"
                                  :value="$produk->harga_dasar ? (int) $produk->harga_dasar : null" hint="Patokan internal." />
                         <div class="col-sm-6 mb-3">
                             <div class="form-check">

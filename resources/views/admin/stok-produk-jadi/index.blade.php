@@ -69,7 +69,7 @@
                         </select>
                     </x-field>
                     <x-field label="Nama" name="nama" hint="Isi bila di luar katalog." />
-                    <x-field label="Harga jual (Rp)" name="harga_jual" type="number" min="0" step="500" />
+                    <x-field label="Harga jual (Rp)" name="harga_jual" type="number" min="0" step="1" />
                     <button class="btn btn-primary w-100">Simpan</button>
                 </x-panel>
             </form>
