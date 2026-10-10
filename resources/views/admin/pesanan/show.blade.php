@@ -22,7 +22,12 @@
                 <x-pill :warna="$bayarWarna" :label="$bayarLabel" />
             </div>
         </div>
-        <a href="{{ route('admin.pesanan.edit', $pesanan) }}" class="btn btn-garis">Ubah data</a>
+        <div class="d-flex gap-2">
+            @if ($pesanan->bisaCetakNota())
+                <a href="{{ route('admin.pesanan.nota', $pesanan) }}" target="_blank" class="btn btn-garis">Cetak nota</a>
+            @endif
+            <a href="{{ route('admin.pesanan.edit', $pesanan) }}" class="btn btn-garis">Ubah data</a>
+        </div>
     </div>
 
     <div class="row g-4">

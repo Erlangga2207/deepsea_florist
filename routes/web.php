@@ -53,6 +53,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('pesanan', PesananController::class)->except('destroy');
     Route::post('pesanan/{pesanan}/status', [PesananController::class, 'ubahStatus'])->name('pesanan.status');
     Route::post('pesanan/{pesanan}/pembayaran', [PesananController::class, 'bayar'])->name('pesanan.pembayaran');
+    Route::get('pesanan/{pesanan}/nota', [PesananController::class, 'nota'])->name('pesanan.nota');
 
     Route::resource('kategori', KategoriController::class)->except('show');
 

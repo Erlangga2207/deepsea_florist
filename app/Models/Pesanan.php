@@ -103,6 +103,12 @@ class Pesanan extends Model
         return max(0, $this->total - $this->total_dibayar);
     }
 
+    // Satu-satunya syarat nota tersedia. Ganti di sini kalau nota hanya untuk status "selesai".
+    public function bisaCetakNota(): bool
+    {
+        return $this->status !== 'batal' && $this->pembayaran()->exists();
+    }
+
     public function hitungUlangTotal(): void
     {
         $this->subtotal = $this->item()->sum('subtotal');

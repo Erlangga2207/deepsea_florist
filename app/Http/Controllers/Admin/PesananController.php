@@ -12,8 +12,11 @@ use App\Http\Requests\PembayaranRequest;
 use App\Http\Requests\PesananStoreRequest;
 use App\Http\Requests\PesananUpdateRequest;
 use App\Http\Requests\UbahStatusRequest;
+use App\Models\Cabang;
+use App\Models\Pengaturan;
 use App\Models\Pesanan;
 use App\Models\Produk;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -163,5 +166,24 @@ class PesananController extends Controller
         }
 
         return back()->with('sukses', 'Pembayaran dicatat.');
+    }
+
+    public function nota(Request $request, Pesanan $pesanan)
+    {
+        abort_unless($pesanan->bisaCetakNota(), 404);
+
+        $pesanan->load('pelanggan', 'item', 'pembayaran');
+
+        $pdf = Pdf::setOption('isFontSubsettingEnabled', true)
+            ->loadView('admin.pesanan.nota', [
+                'pesanan' => $pesanan,
+                'pengaturan' => Pengaturan::ambil(),
+                'cabangUtama' => Cabang::utama(),
+            ])
+            ->setPaper('a4');
+
+        $nama = 'nota-'.$pesanan->kode.'.pdf';
+
+        return $request->boolean('unduh') ? $pdf->download($nama) : $pdf->stream($nama);
     }
 }
