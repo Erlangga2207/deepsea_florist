@@ -5,7 +5,7 @@
 @section('konten')
     <div class="judul-halaman">
         <h1>Catat stok masuk / keluar</h1>
-        <a href="{{ route('admin.mutasi-stok.index') }}" class="btn btn-garis">Riwayat mutasi</a>
+        <a href="{{ route('admin.mutasi-stok.index') }}" class="btn btn-garis">Riwayat stok</a>
     </div>
 
     <form method="POST" action="{{ route('admin.mutasi-stok.store') }}" style="max-width:640px">

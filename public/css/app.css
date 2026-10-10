@@ -89,6 +89,25 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
 .table > thead th{ font-size:.8rem; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-2); font-weight:700; border-bottom-color:var(--line); white-space:nowrap; }
 .table > :not(caption) > * > *{ padding:.65rem 1rem; border-bottom-color:var(--line-2); vertical-align:middle; }
 .table td.angka, .table th.angka{ text-align:right; }
+/* .tabel-kartu: di bawah md tiap baris jadi kartu.
+   Baris 1 = .kartu-judul + .kartu-status (kanan). Sel lain satu baris penuh, atau berderet bila .kartu-sebaris. */
+@media (max-width:767.98px){
+  .tabel-kartu thead{ display:none; }
+  .tabel-kartu, .tabel-kartu tbody{ display:block; }
+  .tabel-kartu tr{ display:flex; flex-wrap:wrap; align-items:center; gap:.2rem .75rem; padding:.75rem 1rem; border-bottom:1px solid var(--line); }
+  .tabel-kartu tr::after{ content:""; flex:0 0 100%; order:1; height:0; } /* paksa baris baru setelah status */
+  .tabel-kartu tr:last-child{ border-bottom:0; }
+  .table.tabel-kartu > :not(caption) > * > *{ display:block; flex:0 0 100%; order:2; min-width:0; padding:0; border:0; text-align:left; white-space:normal; color:var(--ink-2); font-size:.9rem; }
+  .table.tabel-kartu > tbody > tr > .kartu-judul{ flex:1 1 0; order:0; color:var(--ink); font-weight:600; font-size:1rem; }
+  .table.tabel-kartu > tbody > tr > .kartu-status{ flex:0 0 auto; order:1; }
+  .table.tabel-kartu > tbody > tr > .kartu-sebaris{ flex:0 0 auto; }
+  .table.tabel-kartu > tbody > tr > .teks-merah{ color:var(--red); }
+  .table.tabel-kartu > tbody > tr > .teks-amber{ color:var(--amber); }
+  .tabel-kartu td[data-label]::before{ content:attr(data-label) " "; color:var(--ink-3); }
+  .table.tabel-kartu > tbody > tr > .kartu-aksi{ display:flex; gap:.5rem; margin-top:.5rem; }
+  .tabel-kartu .kartu-aksi .btn{ flex:1; min-height:44px; display:inline-flex; align-items:center; justify-content:center; }
+  .table.tabel-kartu > tbody > tr > .kartu-kosong{ text-align:center; }
+}
 .thumb{ width:48px; height:60px; object-fit:cover; border-radius:var(--r); background:var(--line-2); }
 
 /* Peringatan: memberi tahu, tidak memblokir */
@@ -130,7 +149,7 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
 .offline-tombol:hover{ background:var(--rose-d); color:var(--card); }
 
 @media print{
-  .admin-sidebar, .admin-topbar, .no-print{ display:none !important; }
+  .admin-sidebar, .admin-topbar, .nav-hp, .no-print{ display:none !important; }
   .admin-konten{ padding:0; }
   .kotak{ border:0; }
 }
@@ -240,9 +259,14 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
 .admin-sidebar{
   width:240px; flex-shrink:0; background:var(--card); border-right:1px solid var(--line);
   padding:1rem .75rem; position:sticky; top:0; height:100vh; overflow-y:auto;
+  display:flex; flex-direction:column;
 }
 .admin-brand{ display:flex; align-items:center; gap:.5rem; padding:.25rem .5rem 1rem; color:var(--ink); text-decoration:none; font-weight:700; }
 .admin-brand img{ width:36px; height:36px; object-fit:contain; }
+.admin-nav{ flex:1; display:flex; flex-direction:column; }
+.admin-grup + .admin-grup{ margin-top:.75rem; }
+.admin-grup-bawah{ margin-top:auto !important; padding-top:.75rem; border-top:1px solid var(--line); }
+.admin-grup-judul{ font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-2); padding:.25rem .75rem; }
 .admin-menu{ list-style:none; margin:0; padding:0; }
 .admin-menu a{
   display:flex; align-items:center; gap:.6rem; min-height:40px; padding:.4rem .75rem;
@@ -251,6 +275,11 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
 .admin-menu a:hover{ background:var(--line-2); color:var(--ink); }
 .admin-menu a.aktif{ background:var(--rose-wash); color:var(--rose-d); }
 .admin-menu svg{ width:18px; height:18px; flex-shrink:0; }
+.admin-badge{
+  display:inline-flex; align-items:center; justify-content:center; min-width:1.35rem; height:1.35rem; padding:0 .35rem;
+  border-radius:999px; background:var(--rose); color:var(--card); font-size:.72rem; font-weight:700; line-height:1;
+  font-variant-numeric:tabular-nums;
+}
 .admin-main{ flex:1; min-width:0; }
 .admin-topbar{
   display:flex; align-items:center; justify-content:flex-end; gap:.75rem;
@@ -259,17 +288,35 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
 .admin-konten{ padding:1.5rem; }
 .admin-konten h1{ font-size:1.5rem; font-weight:700; margin:0; }
 
-@media (max-width:899.98px){
-  .admin{ flex-direction:column; }
-  .admin-sidebar{
-    width:100%; height:auto; position:static; padding:.5rem;
-    border-right:0; border-bottom:1px solid var(--line);
-    display:flex; align-items:center; gap:.5rem; overflow-x:auto;
-  }
-  .admin-brand{ padding:0 .25rem; }
-  .admin-brand span{ display:none; }
-  .admin-menu{ display:flex; gap:.25rem; }
-  .admin-menu a{ white-space:nowrap; }
-  .admin-topbar{ padding:.5rem 1rem; }
-  .admin-konten{ padding:1rem; }
+/* HP & tablet: sidebar diganti header + bottom nav + offcanvas */
+.nav-hp{
+  position:fixed; left:0; right:0; bottom:0; z-index:1030; display:flex;
+  background:var(--card); border-top:1px solid var(--line); padding-bottom:env(safe-area-inset-bottom);
+}
+.nav-hp-item{
+  position:relative; flex:1 1 0; min-width:0; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  padding:.35rem .25rem; background:none; border:0; color:var(--ink-2); font-size:.72rem; font-weight:600; text-decoration:none;
+}
+.nav-hp-item.aktif{ color:var(--rose-d); }
+.nav-hp-item.aktif::before{ content:""; position:absolute; top:0; left:25%; right:25%; height:3px; border-radius:0 0 3px 3px; background:var(--rose); }
+.nav-hp-ikon{ position:relative; display:flex; }
+.nav-hp-ikon svg{ width:22px; height:22px; }
+.nav-hp-ikon .admin-badge{ position:absolute; top:-6px; left:14px; min-width:1.1rem; height:1.1rem; font-size:.65rem; border:2px solid var(--card); box-sizing:content-box; }
+.nav-hp-tambah .nav-hp-ikon{
+  width:48px; height:48px; margin-top:-22px; border-radius:50%; align-items:center; justify-content:center;
+  background:var(--rose); color:var(--card); box-shadow:0 2px 8px rgba(43,34,38,.25);
+}
+.nav-hp-tambah.aktif .nav-hp-ikon{ background:var(--rose-d); }
+.nav-hp-tambah.aktif::before{ top:auto; bottom:2px; }
+.admin-offcanvas.offcanvas-bottom{ height:auto; max-height:85vh; border-radius:var(--r) var(--r) 0 0; }
+.admin-offcanvas .offcanvas-body{ padding-top:0; padding-bottom:calc(1rem + env(safe-area-inset-bottom)); }
+.admin-offcanvas .admin-menu a{ min-height:48px; }
+.admin-offcanvas .admin-grup-bawah{ margin-top:.75rem !important; }
+.admin-offcanvas-user{ display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-top:1rem; padding-top:1rem; border-top:1px solid var(--line); }
+
+@media (max-width:991.98px){
+  .admin-sidebar{ display:none; }
+  .admin-topbar{ justify-content:flex-start; padding:.5rem 1rem; }
+  .admin-topbar .admin-brand{ padding:0; }
+  .admin-konten{ padding:1rem; padding-bottom:calc(5.5rem + env(safe-area-inset-bottom)); }
 }

@@ -119,7 +119,7 @@
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="checkbox" name="masuk_stok_jadi" value="1" id="masuk_stok_jadi"
                                        @checked($pesanan->status !== 'masuk')>
-                                <label class="form-check-label" for="masuk_stok_jadi">Buket sudah/terlanjur dibuat — masukkan ke Stok Produk Jadi</label>
+                                <label class="form-check-label" for="masuk_stok_jadi">Buket sudah/terlanjur dibuat — masukkan ke Buket siap jual</label>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label small" for="harga_jual">Harga jual langsung (boleh kosong)</label>

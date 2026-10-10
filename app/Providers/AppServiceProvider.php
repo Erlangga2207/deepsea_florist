@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
+use App\Models\Bahan;
 use App\Models\Cabang;
 use App\Models\Pengaturan;
+use App\Models\Pesanan;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -42,6 +45,28 @@ class AppServiceProvider extends ServiceProvider
                 'cabang' => $cabang,
                 'cabangUtama' => $cabang->firstWhere('is_utama', true),
             ]);
+        });
+
+        // Menu admin dari config/admin-menu.php, sudah disaring per role. Grup kosong ikut dibuang.
+        View::composer('layouts.admin', function ($view) {
+            $role = auth()->user()->role;
+            $badge = [
+                'pesanan_masuk' => Pesanan::where('status', 'masuk')->count(),
+                'bahan_menipis' => Bahan::menipis()->count(),
+            ];
+
+            $menu = collect(config('admin-menu'))
+                ->map(function ($grup) use ($role, $badge) {
+                    $grup['item'] = collect($grup['item'])
+                        ->filter(fn ($i) => Route::has($i['route']) && in_array($i['role'] ?? null, [null, $role]))
+                        ->map(fn ($i) => $i + ['jumlah' => $badge[$i['badge'] ?? ''] ?? 0])
+                        ->values();
+
+                    return $grup;
+                })
+                ->filter(fn ($grup) => $grup['item']->isNotEmpty());
+
+            $view->with(['menuAdmin' => $menu, 'badgeAdmin' => $badge]);
         });
 
         // @rupiah(158000) → Rp 158.000

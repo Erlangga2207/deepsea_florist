@@ -46,6 +46,13 @@ class Bahan extends Model
         return $this->hasOne(MutasiStok::class)->ofMany(['tanggal' => 'max', 'id' => 'max'], fn ($q) => $q->where('tipe', 'masuk'));
     }
 
+    // Bahan aktif yang statusStok()-nya bukan "Aman". Dipakai tile dashboard dan badge menu.
+    public function scopeMenipis($query)
+    {
+        return $query->where('is_aktif', true)
+            ->where(fn ($q) => $q->where('stok', '<=', 0)->orWhereColumn('stok', '<', 'stok_minimum'));
+    }
+
     // Habis bila sisa ≤ ¼ minimum, Menipis bila di bawah minimum.
     // Return [label, warna pill]
     public function statusStok(): array

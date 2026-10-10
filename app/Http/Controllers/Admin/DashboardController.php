@@ -19,8 +19,7 @@ class DashboardController extends Controller
             ->orderBy('tanggal_jadi')
             ->get();
 
-        $bahanMenipis = Bahan::where('is_aktif', true)->orderBy('nama')->get()
-            ->filter(fn ($b) => $b->statusStok()[0] !== 'Aman')
+        $bahanMenipis = Bahan::menipis()->orderBy('nama')->get()
             ->sortBy(fn ($b) => $b->stok / max($b->stok_minimum, 1));
 
         $bebanMinggu = $kapasitas->rentang(today(), 7);

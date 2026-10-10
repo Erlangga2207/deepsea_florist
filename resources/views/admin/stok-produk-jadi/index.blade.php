@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('judul', 'Stok produk jadi')
+@section('judul', 'Buket siap jual')
 
 @section('konten')
     <div class="judul-halaman">
-        <h1>Stok produk jadi</h1>
+        <h1>Buket siap jual</h1>
     </div>
 
     <nav class="tab-garis">

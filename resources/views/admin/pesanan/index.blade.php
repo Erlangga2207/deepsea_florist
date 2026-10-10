@@ -29,7 +29,7 @@
 
     <x-panel>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table tabel-kartu">
                 <thead>
                 <tr>
                     <th>Kode</th>
@@ -49,7 +49,7 @@
                         $item = $p->item->first();
                     @endphp
                     <tr>
-                        <td class="text-nowrap"><a href="{{ route('admin.pesanan.show', $p) }}" class="fw-semibold angka">{{ $p->kode }}</a></td>
+                        <td class="text-nowrap kartu-judul"><a href="{{ route('admin.pesanan.show', $p) }}" class="fw-semibold angka">{{ $p->kode }}</a></td>
                         <td>{{ $p->pelanggan->nama }}</td>
                         <td>
                             {{ $item?->nama_item }}@if ($item && $item->qty > 1) × {{ $item->qty }}@endif
@@ -57,13 +57,13 @@
                                 <div class="small text-ink-2">{{ Str::limit($p->catatan, 50) }}</div>
                             @endif
                         </td>
-                        <td class="text-nowrap {{ $tanggalKelas }}">{{ $tanggalTeks }}</td>
-                        <td><x-pill :warna="$p->warnaStatus()" :label="$p->labelStatus()" /></td>
-                        <td><x-pill :warna="$bayarWarna" :label="$bayarLabel" /></td>
-                        <td class="angka text-nowrap">@rupiah($p->total)</td>
+                        <td class="text-nowrap kartu-sebaris {{ $tanggalKelas }}">{{ $tanggalTeks }}</td>
+                        <td class="kartu-status"><x-pill :warna="$p->warnaStatus()" :label="$p->labelStatus()" /></td>
+                        <td class="kartu-sebaris"><x-pill :warna="$bayarWarna" :label="$bayarLabel" /></td>
+                        <td class="angka text-nowrap kartu-sebaris">@rupiah($p->total)</td>
                     </tr>
                 @empty
-                    <tr><td colspan="7" class="text-center text-ink-2 py-4">Tidak ada pesanan di sini.</td></tr>
+                    <tr><td colspan="7" class="kartu-kosong text-center text-ink-2 py-4">Tidak ada pesanan di sini.</td></tr>
                 @endforelse
                 </tbody>
             </table>

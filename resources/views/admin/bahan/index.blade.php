@@ -23,7 +23,7 @@
 
     <x-panel>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table tabel-kartu">
                 <thead>
                 <tr>
                     <th>Bahan</th>
@@ -40,7 +40,7 @@
                 @forelse ($bahan as $b)
                     @php [$labelStatus, $warnaStatus] = $b->statusStok(); @endphp
                     <tr @class(['text-ink-2' => ! $b->is_aktif])>
-                        <td>
+                        <td class="kartu-judul">
                             <div class="fw-semibold">{{ $b->nama }}</div>
                             @if ($b->dijual_eceran)
                                 <div class="small text-ink-2">Eceran @rupiah($b->harga_eceran) / {{ $b->satuan }}</div>
@@ -49,19 +49,19 @@
                                 <div class="small">Nonaktif</div>
                             @endunless
                         </td>
-                        <td>{{ $jenis[$b->jenis] }}</td>
-                        <td class="angka text-nowrap">@angka($b->stok) {{ $b->satuan }}</td>
-                        <td class="angka text-nowrap">@angka($b->stok_minimum) {{ $b->satuan }}</td>
-                        <td><x-pill :warna="$warnaStatus" :label="$labelStatus" /></td>
-                        <td class="text-nowrap">{{ $b->masukTerakhir?->tanggal->translatedFormat('j M Y') ?? '—' }}</td>
-                        <td class="text-nowrap">{{ $b->catatanUmur() }}</td>
-                        <td class="text-end text-nowrap">
+                        <td class="kartu-sebaris">{{ $jenis[$b->jenis] }}</td>
+                        <td class="angka text-nowrap kartu-sebaris" data-label="Sisa">@angka($b->stok) {{ $b->satuan }}</td>
+                        <td class="angka text-nowrap kartu-sebaris" data-label="Min.">@angka($b->stok_minimum) {{ $b->satuan }}</td>
+                        <td class="kartu-status"><x-pill :warna="$warnaStatus" :label="$labelStatus" /></td>
+                        <td class="text-nowrap kartu-sebaris" data-label="Masuk">{{ $b->masukTerakhir?->tanggal->translatedFormat('j M Y') ?? '—' }}</td>
+                        <td class="text-nowrap kartu-sebaris">{{ $b->catatanUmur() }}</td>
+                        <td class="text-end text-nowrap kartu-aksi">
                             <a href="{{ route('admin.mutasi-stok.create', ['bahan' => $b->id]) }}" class="btn btn-garis btn-sm">Catat</a>
                             <a href="{{ route('admin.bahan.edit', $b) }}" class="btn btn-polos btn-sm">Ubah</a>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="8" class="text-center text-ink-2 py-4">Belum ada bahan.</td></tr>
+                    <tr><td colspan="8" class="kartu-kosong text-center text-ink-2 py-4">Belum ada bahan.</td></tr>
                 @endforelse
                 </tbody>
             </table>

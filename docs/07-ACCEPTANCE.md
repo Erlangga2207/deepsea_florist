@@ -125,7 +125,7 @@ Jalankan manual di browser. Belum perlu tes otomatis.
 | I2 | Badge status | Selalu warna **dan** tulisan |
 | I3 | Ikon | Tidak ada emoji dipakai sebagai ikon |
 | I4 | Teks antarmuka | Seluruhnya bahasa Indonesia |
-| I5 | Panel admin di HP | Sidebar berubah jadi baris menu, tabel bisa digeser |
+| I5 | Panel admin di HP | Sidebar diganti bottom nav + offcanvas Menu; tabel dashboard, pesanan, dan bahan tampil sebagai kartu; tidak ada scroll horizontal di 360px |
 | I6 | Angka di kolom tabel | Rata kanan dan sejajar (tabular-nums) |
 
 ## S. SEO (dari `docs/08-SEO.md` bagian A12)

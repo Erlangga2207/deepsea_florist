@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('judul', 'Mutasi stok')
+@section('judul', 'Riwayat stok')
 
 @section('konten')
     <div class="judul-halaman">
-        <h1>Riwayat mutasi stok</h1>
+        <h1>Riwayat stok</h1>
         <a href="{{ route('admin.mutasi-stok.create') }}" class="btn btn-primary">Catat stok</a>
     </div>
 

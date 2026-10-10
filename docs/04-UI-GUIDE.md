@@ -123,7 +123,9 @@ Bukan halaman aplikasi, hanya acuan di Figma.
 
 Owner memakai HP dan laptop bergantian, jadi panel admin **wajib** mobile-friendly, bukan sekadar "tidak rusak":
 
-- Sidebar jadi baris menu horizontal yang bisa digeser di bawah 900px
+- Menu admin bersumber dari satu tempat, `config/admin-menu.php` (label, route, ikon, grup, role, badge). Sidebar desktop dan menu HP merender dari sana lewat `layouts/admin-menu.blade.php`.
+- ≥ lg (992px): sidebar sticky setinggi layar, bisa di-scroll sendiri, judul grup huruf kapital kecil.
+- < lg: header berisi logo + nama toko, bottom nav 5 slot (Beranda, Pesanan, Tambah pesanan, Stok, Menu). "Menu" membuka offcanvas berisi menu lengkap + nama user + tombol Keluar.
 - Kolom dua jadi satu kolom
-- Tabel dibungkus `.table-responsive`
-- Target sentuh minimal 40px
+- < md (768px): tabel ber-class `.tabel-kartu` berubah jadi kartu bertumpuk (`.kartu-judul`, `.kartu-status`, `.kartu-sebaris`, `.kartu-aksi`, `data-label`). Tabel lain masih dibungkus `.table-responsive`.
+- Target sentuh minimal 40px (48px di bottom nav dan menu HP)

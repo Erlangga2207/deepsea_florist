@@ -36,19 +36,19 @@
                     <p class="text-ink-2 mb-0">Tidak ada pesanan yang jatuh tempo hari ini.</p>
                 @else
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table tabel-kartu">
                             <tbody>
                             @foreach ($antrian as $p)
                                 @php [$tanggalTeks, $tanggalKelas] = $p->tanggalJadiRelatif(); [$bayarLabel, $bayarWarna] = $p->statusBayar(); @endphp
                                 <tr>
-                                    <td class="text-nowrap"><a href="{{ route('admin.pesanan.show', $p) }}" class="fw-semibold angka">{{ $p->kode }}</a></td>
+                                    <td class="text-nowrap kartu-judul"><a href="{{ route('admin.pesanan.show', $p) }}" class="fw-semibold angka">{{ $p->kode }}</a></td>
                                     <td>
                                         {{ $p->item->first()?->nama_item }}
                                         <div class="small text-ink-2">{{ $p->pelanggan->nama }}@if ($p->catatan) · {{ Str::limit($p->catatan, 40) }}@endif</div>
                                     </td>
-                                    <td class="text-nowrap {{ $tanggalKelas }}">{{ $tanggalTeks }}</td>
-                                    <td class="text-nowrap"><x-pill :warna="$p->warnaStatus()" :label="$p->labelStatus()" /></td>
-                                    <td class="text-nowrap"><x-pill :warna="$bayarWarna" :label="$bayarLabel" /></td>
+                                    <td class="text-nowrap kartu-sebaris {{ $tanggalKelas }}">{{ $tanggalTeks }}</td>
+                                    <td class="text-nowrap kartu-status"><x-pill :warna="$p->warnaStatus()" :label="$p->labelStatus()" /></td>
+                                    <td class="text-nowrap kartu-sebaris"><x-pill :warna="$bayarWarna" :label="$bayarLabel" /></td>
                                 </tr>
                             @endforeach
                             </tbody>
