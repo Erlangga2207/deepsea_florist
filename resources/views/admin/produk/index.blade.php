@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                 @forelse ($produk as $p)
-                    <tr>
+                    <tr class="baris-link">
                         <td>
                             @if ($p->foto_utama)
                                 <img src="{{ Storage::url($p->foto_utama) }}" alt="" class="thumb">
@@ -45,7 +45,7 @@
                         </td>
                         <td class="angka text-start">{{ $p->kode }}</td>
                         <td>
-                            <a href="{{ route('admin.produk.show', $p) }}" class="fw-semibold text-body">{{ $p->nama }}</a>
+                            <a href="{{ route('admin.produk.show', $p) }}" class="stretched-link text-reset text-decoration-none fw-semibold">{{ $p->nama }}</a>
                             <div class="small text-ink-2">{{ $p->kategori->nama }}</div>
                         </td>
                         <td class="text-nowrap">

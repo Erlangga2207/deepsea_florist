@@ -108,6 +108,14 @@ body{ background:var(--bg); color:var(--ink); font-family:var(--font-ui); }
   .tabel-kartu .kartu-aksi .btn{ flex:1; min-height:44px; display:inline-flex; align-items:center; justify-content:center; }
   .table.tabel-kartu > tbody > tr > .kartu-kosong{ text-align:center; }
 }
+/* Baris daftar yang seluruhnya bisa diklik: satu <a class="stretched-link"> per baris, tanpa JavaScript.
+   Tombol/form/link lain di dalam baris diangkat di atas lapisan stretched-link supaya tetap bisa diklik sendiri. */
+.baris-link{ position:relative; cursor:pointer; }
+.table > tbody > tr.baris-link:hover{ --bs-table-bg:var(--line-2); }
+div.baris-link:hover{ background:var(--line-2); }
+.baris-link :is(a:not(.stretched-link), button, form, input, select){ position:relative; z-index:2; }
+.baris-link .stretched-link:focus-visible{ outline:0; }
+.baris-link .stretched-link:focus-visible::after{ outline:2px solid var(--rose); outline-offset:-2px; border-radius:var(--r); }
 .thumb{ width:48px; height:60px; object-fit:cover; border-radius:var(--r); background:var(--line-2); }
 
 /* Peringatan: memberi tahu, tidak memblokir */

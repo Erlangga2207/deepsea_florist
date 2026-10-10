@@ -39,9 +39,9 @@
                 <tbody>
                 @forelse ($bahan as $b)
                     @php [$labelStatus, $warnaStatus] = $b->statusStok(); @endphp
-                    <tr @class(['text-ink-2' => ! $b->is_aktif])>
+                    <tr @class(['baris-link', 'text-ink-2' => ! $b->is_aktif])>
                         <td class="kartu-judul">
-                            <div class="fw-semibold">{{ $b->nama }}</div>
+                            <a href="{{ route('admin.bahan.edit', $b) }}" class="stretched-link text-reset text-decoration-none fw-semibold d-block">{{ $b->nama }}</a>
                             @if ($b->dijual_eceran)
                                 <div class="small text-ink-2">Eceran @rupiah($b->harga_eceran) / {{ $b->satuan }}</div>
                             @endif

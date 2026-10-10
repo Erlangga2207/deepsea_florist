@@ -21,10 +21,10 @@
                 </thead>
                 <tbody>
                 @forelse ($faq as $f)
-                    <tr @class(['text-ink-2' => ! $f->is_aktif])>
+                    <tr @class(['baris-link', 'text-ink-2' => ! $f->is_aktif])>
                         <td class="angka text-start">{{ $f->urutan }}</td>
                         <td>
-                            <div class="fw-semibold">{{ $f->pertanyaan }}</div>
+                            <a href="{{ route('admin.faq.edit', $f) }}" class="stretched-link text-reset text-decoration-none fw-semibold d-block">{{ $f->pertanyaan }}</a>
                             <div class="small text-ink-2">{{ Str::limit($f->jawaban, 90) }}</div>
                         </td>
                         <td>

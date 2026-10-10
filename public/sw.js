@@ -1,6 +1,6 @@
 // Service worker panel admin (docs/10-PWA-ADMIN.md).
 // NAIKKAN VERSI setiap kali app.css atau berkas di ASET berubah, supaya cache lama dibuang.
-const VERSI = 'deepsea-v2';
+const VERSI = 'deepsea-v3';
 const FOTO = 'deepsea-foto';
 const MAKS_FOTO = 60;
 const ASET = [

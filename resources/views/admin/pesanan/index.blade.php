@@ -48,8 +48,8 @@
                         [$bayarLabel, $bayarWarna] = $p->statusBayar();
                         $item = $p->item->first();
                     @endphp
-                    <tr>
-                        <td class="text-nowrap kartu-judul"><a href="{{ route('admin.pesanan.show', $p) }}" class="fw-semibold angka">{{ $p->kode }}</a></td>
+                    <tr class="baris-link">
+                        <td class="text-nowrap kartu-judul"><a href="{{ route('admin.pesanan.show', $p) }}" class="stretched-link text-reset text-decoration-none fw-semibold angka">{{ $p->kode }}</a></td>
                         <td>{{ $p->pelanggan->nama }}</td>
                         <td>
                             {{ $item?->nama_item }}@if ($item && $item->qty > 1) × {{ $item->qty }}@endif

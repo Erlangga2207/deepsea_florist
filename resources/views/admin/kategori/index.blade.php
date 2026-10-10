@@ -22,10 +22,10 @@
                 </thead>
                 <tbody>
                 @forelse ($kategori as $k)
-                    <tr>
+                    <tr class="baris-link">
                         <td class="angka text-start">{{ $k->urutan }}</td>
                         <td>
-                            <div class="fw-semibold">{{ $k->nama }}</div>
+                            <a href="{{ route('admin.kategori.edit', $k) }}" class="stretched-link text-reset text-decoration-none fw-semibold d-block">{{ $k->nama }}</a>
                             <div class="small text-ink-2">/{{ $k->slug }}</div>
                         </td>
                         <td>{{ \App\Http\Controllers\Admin\KategoriController::TIPE_HARGA[$k->tipe_harga] }}</td>

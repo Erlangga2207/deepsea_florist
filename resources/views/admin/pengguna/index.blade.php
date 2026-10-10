@@ -22,9 +22,9 @@
                 </thead>
                 <tbody>
                 @foreach ($pengguna as $u)
-                    <tr>
+                    <tr class="baris-link">
                         <td class="fw-semibold">
-                            {{ $u->name }}
+                            <a href="{{ route('admin.pengguna.edit', $u) }}" class="stretched-link text-reset text-decoration-none">{{ $u->name }}</a>
                             @if ($u->is(auth()->user())) <span class="small text-ink-2 fw-normal">(Anda)</span> @endif
                         </td>
                         <td>{{ $u->email }}</td>

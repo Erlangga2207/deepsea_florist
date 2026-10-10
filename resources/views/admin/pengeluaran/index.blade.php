@@ -33,11 +33,11 @@
                 </thead>
                 <tbody>
                 @forelse ($pengeluaran as $p)
-                    <tr>
+                    <tr class="baris-link">
                         <td class="text-nowrap">{{ $p->tanggal->translatedFormat('j M Y') }}</td>
                         <td>{{ $kategori[$p->kategori] }}</td>
                         <td>
-                            {{ $p->keterangan ?: '—' }}
+                            <a href="{{ route('admin.pengeluaran.edit', $p) }}" class="stretched-link text-reset text-decoration-none">{{ $p->keterangan ?: $kategori[$p->kategori] }}</a>
                             @if ($p->bukti) <a href="{{ Storage::url($p->bukti) }}" target="_blank" rel="noopener" class="small">(bukti)</a> @endif
                         </td>
                         <td class="angka text-nowrap">@rupiah($p->nominal)</td>

@@ -40,11 +40,10 @@
                             <tbody>
                             @foreach ($antrian as $p)
                                 @php [$tanggalTeks, $tanggalKelas] = $p->tanggalJadiRelatif(); [$bayarLabel, $bayarWarna] = $p->statusBayar(); @endphp
-                                <tr>
-                                    <td class="text-nowrap kartu-judul"><a href="{{ route('admin.pesanan.show', $p) }}" class="fw-semibold angka">{{ $p->kode }}</a></td>
-                                    <td>
-                                        {{ $p->item->first()?->nama_item }}
-                                        <div class="small text-ink-2">{{ $p->pelanggan->nama }}@if ($p->catatan) · {{ Str::limit($p->catatan, 40) }}@endif</div>
+                                <tr class="baris-link">
+                                    <td class="kartu-judul">
+                                        <a href="{{ route('admin.pesanan.show', $p) }}" class="stretched-link text-reset text-decoration-none fw-semibold">{{ $p->item->first()?->nama_item ?? $p->kode }}</a>
+                                        <div class="small text-ink-2 fw-normal">{{ $p->pelanggan->nama }}@if ($p->catatan) · {{ Str::limit($p->catatan, 40) }}@endif · <span class="angka">{{ $p->kode }}</span></div>
                                     </td>
                                     <td class="text-nowrap kartu-sebaris {{ $tanggalKelas }}">{{ $tanggalTeks }}</td>
                                     <td class="text-nowrap kartu-status"><x-pill :warna="$p->warnaStatus()" :label="$p->labelStatus()" /></td>
@@ -59,10 +58,10 @@
 
             <x-panel judul="Siap dijual langsung" :tautan="Route::has('admin.stok-produk-jadi.index') ? route('admin.stok-produk-jadi.index') : null">
                 @forelse ($siapJual as $s)
-                    <div class="saran-item">
+                    <div class="saran-item baris-link">
                         <x-foto-produk :path="$s->foto" alt="" class="thumb" />
                         <div class="flex-grow-1">
-                            <div class="fw-semibold">{{ $s->nama }}</div>
+                            <a href="{{ route('admin.stok-produk-jadi.index') }}" class="stretched-link text-reset text-decoration-none fw-semibold">{{ $s->nama }}</a>
                             <div class="small text-ink-2">{{ $s->asal === 'batal' ? 'Dari pesanan batal' : 'Dibuat untuk dipajang' }} · sejak {{ $s->created_at->translatedFormat('j M') }}</div>
                         </div>
                         <div class="angka text-nowrap">@if ($s->harga_jual) @rupiah($s->harga_jual) @endif</div>

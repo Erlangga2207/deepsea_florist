@@ -24,10 +24,10 @@
                 </thead>
                 <tbody>
                 @forelse ($cabang as $c)
-                    <tr>
+                    <tr class="baris-link">
                         <td class="angka text-start">{{ $c->urutan }}</td>
                         <td>
-                            <div class="fw-semibold">{{ $c->nama }}</div>
+                            <a href="{{ route('admin.cabang.edit', $c) }}" class="stretched-link text-reset text-decoration-none fw-semibold d-block">{{ $c->nama }}</a>
                             @if ($c->is_utama) <x-pill warna="rose" label="Cabang utama" /> @endif
                         </td>
                         <td class="small">{{ $c->alamat }}</td>
