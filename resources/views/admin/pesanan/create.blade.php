@@ -61,6 +61,9 @@
                                  hint="Terisi dari harga dasar; ubah sesuai kesepakatan." />
                     </div>
 
+                    {{-- Khusus HP: kolom jawaban sistem turun ke bawah tombol Simpan, jadi ringkasannya ditampilkan di sini --}}
+                    <div id="ringkas-jawaban" class="d-lg-none" aria-live="polite"></div>
+
                     <div class="mb-3">
                         <div class="form-label">Diambil atau diantar</div>
                         <div class="d-flex gap-3">
@@ -109,7 +112,7 @@
         </div>
 
         {{-- Kanan: jawaban sistem --}}
-        <div class="col-lg-5">
+        <div class="col-lg-5" id="jawaban-sistem">
             <div id="jawab-bahan"></div>
             <div id="jawab-saran"></div>
             <div id="jawab-kapasitas"></div>
@@ -153,6 +156,24 @@
                 tampilBahan(j.kelayakan);
                 tampilKapasitas(j.kapasitas);
                 tampilHarga(j.harga, j.kelayakan);
+                tampilRingkas(j);
+            }
+
+            function tampilRingkas(j) {
+                const kurang = j.kelayakan && !j.kelayakan.layak;
+                const padat = j.kapasitas && j.kapasitas.penuh;
+                const adaHarga = j.harga && !(j.kelayakan?.tanpa_komposisi && !['uang', 'papan'].includes(j.harga.tipe));
+                const tautan = `<a href="#jawaban-sistem" class="d-inline-block mt-1">Lihat saran dan rincian harga</a>`;
+
+                if (!kurang && !padat) {
+                    const judul = f.tanggal_jadi.value ? 'Bahan cukup, tanggal masih bisa' : 'Bahan cukup';
+                    el('ringkas-jawaban').innerHTML = !adaHarga ? '' : `<div class="peringatan peringatan-ok" role="status">
+                        <strong>${judul}</strong>Perkiraan harga ${rp(j.harga.saran_harga)}.<br>${tautan}</div>`;
+                    return;
+                }
+                const isi = [kurang ? esc(j.kelayakan.pesan) : '', padat ? 'Tanggal ini sudah padat.' : ''].filter(Boolean).join('<br>');
+                el('ringkas-jawaban').innerHTML = `<div class="peringatan ${kurang ? 'peringatan-bad' : 'peringatan-warn'}" role="status">
+                    <strong>Perlu dicek sebelum disimpan</strong>${isi}<br>${tautan}</div>`;
             }
 
             function tampilBahan(k) {
