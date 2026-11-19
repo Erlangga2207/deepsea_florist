@@ -44,9 +44,20 @@
 
             <div class="row" id="khusus-masuk">
                 <x-field class="col-sm-6" label="Harga beli per satuan (Rp)" name="harga_beli" type="number" min="0"
-                         hint="Kalau diisi, harga beli terakhir bahan ikut diperbarui." />
+                         hint="Dipakai untuk harga beli terakhir dan nominal pengeluaran." />
                 <x-field class="col-sm-6" label="Layu sekitar tanggal" name="tanggal_kadaluarsa" type="date"
                          :value="today()->addDays(14)->toDateString()" hint="Khusus bunga fresh, biasanya ±2 minggu." />
+                @if (auth()->user()->role === 'owner')
+                    <div class="col-12 mb-3">
+                        <div class="form-check">
+                            <input type="hidden" name="catat_pengeluaran" value="0">
+                            <input class="form-check-input" type="checkbox" id="catat_pengeluaran" name="catat_pengeluaran" value="1"
+                                   @checked(old('catat_pengeluaran', true))>
+                            <label class="form-check-label" for="catat_pengeluaran">Catat juga sebagai pengeluaran (bahan)</label>
+                        </div>
+                        <div class="form-text">Jumlah × harga beli. Hilangkan centang kalau notanya dicatat sendiri di menu Pengeluaran.</div>
+                    </div>
+                @endif
             </div>
 
             <x-field label="Keterangan" name="keterangan" maxlength="200" placeholder="mis. kulakan Lembang, bunga layu"

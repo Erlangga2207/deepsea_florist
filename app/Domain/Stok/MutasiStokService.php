@@ -4,11 +4,12 @@ namespace App\Domain\Stok;
 
 use App\Models\Bahan;
 use App\Models\MutasiStok;
+use App\Models\Pengeluaran;
 use App\Models\Pesanan;
 use Illuminate\Support\Facades\DB;
 
 // Satu-satunya tempat yang boleh mengubah bahan.stok.
-// $opsi: tanggal, tanggal_kadaluarsa, keterangan, pesanan_id, pengeluaran_id, user_id, harga_beli (khusus masuk)
+// $opsi: tanggal, tanggal_kadaluarsa, keterangan, pesanan_id, pengeluaran_id, user_id, harga_beli, catat_pengeluaran (khusus masuk)
 class MutasiStokService
 {
     public function masuk(Bahan $bahan, float $jumlah, array $opsi = []): MutasiStok
@@ -18,6 +19,16 @@ class MutasiStokService
 
             if (! empty($opsi['harga_beli'])) {
                 $bahan->update(['harga_beli_terakhir' => $opsi['harga_beli']]);
+
+                if (! empty($opsi['catat_pengeluaran'])) {
+                    $opsi['pengeluaran_id'] = Pengeluaran::create([
+                        'user_id' => $opsi['user_id'] ?? auth()->id(),
+                        'tanggal' => $opsi['tanggal'] ?? now(),
+                        'kategori' => 'bahan',
+                        'nominal' => $jumlah * $opsi['harga_beli'],
+                        'keterangan' => mb_substr(trim("Stok masuk: {$bahan->nama} {$this->angka($jumlah)} {$bahan->satuan}. ".($opsi['keterangan'] ?? '')), 0, 255),
+                    ])->id;
+                }
             }
 
             return $this->catat($bahan, 'masuk', $jumlah, $opsi);

@@ -17,6 +17,7 @@ class MutasiStokRequest extends FormRequest
             'tanggal' => ['required', 'date'],
             'tanggal_kadaluarsa' => ['nullable', 'date', 'after_or_equal:tanggal'],
             'harga_beli' => ['nullable', 'numeric', 'min:0'],
+            'catat_pengeluaran' => ['boolean'],
             'keterangan' => ['nullable', 'required_if:tipe,penyesuaian', 'string', 'max:200'],
         ];
     }
