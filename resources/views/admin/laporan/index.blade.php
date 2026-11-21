@@ -8,7 +8,10 @@
             <h1>Laporan</h1>
             <div class="text-ink-2">{{ $dari->translatedFormat('j F Y') }} – {{ $sampai->translatedFormat('j F Y') }}</div>
         </div>
-        <a href="{{ route('admin.laporan.cetak', ['dari' => $dari->toDateString(), 'sampai' => $sampai->toDateString()]) }}" class="btn btn-primary">Cetak PDF</a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('admin.laporan.excel', ['dari' => $dari->toDateString(), 'sampai' => $sampai->toDateString()]) }}" class="btn btn-garis">Unduh Excel</a>
+            <a href="{{ route('admin.laporan.cetak', ['dari' => $dari->toDateString(), 'sampai' => $sampai->toDateString()]) }}" class="btn btn-primary">Cetak PDF</a>
+        </div>
     </div>
 
     <form method="GET" class="d-flex flex-wrap align-items-end gap-2 mb-4">

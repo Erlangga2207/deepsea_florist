@@ -69,6 +69,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::middleware('owner')->group(function () {
         Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+        Route::get('laporan/excel', [LaporanController::class, 'excel'])->name('laporan.excel');
         Route::resource('pengeluaran', PengeluaranController::class)->except('show');
         Route::resource('pengguna', PenggunaController::class)->except(['show', 'destroy']);
         Route::resource('faq', AdminFaqController::class)->except('show');
