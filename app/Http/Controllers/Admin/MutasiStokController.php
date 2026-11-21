@@ -49,6 +49,7 @@ class MutasiStokController extends Controller
                 'tanggal_kadaluarsa' => $bahan->jenis === 'fresh' ? ($data['tanggal_kadaluarsa'] ?? null) : null,
                 'harga_beli' => $data['harga_beli'] ?? null,
                 'catat_pengeluaran' => $request->user()->role === 'owner' && $request->boolean('catat_pengeluaran'),
+                'buang_layu' => $bahan->jenis === 'fresh' && $request->boolean('buang_layu') ? (float) $data['jumlah_layu'] : 0,
             ]),
             'keluar' => $service->keluar($bahan, $data['jumlah'], $opsi),
             'penyesuaian' => $service->penyesuaian($bahan, $data['jumlah'], $data['keterangan'], $opsi),

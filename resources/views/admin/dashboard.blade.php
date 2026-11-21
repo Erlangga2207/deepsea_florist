@@ -39,16 +39,25 @@
                         <table class="table tabel-kartu">
                             <tbody>
                             @foreach ($antrian as $p)
-                                @php [$tanggalTeks, $tanggalKelas] = $p->tanggalJadiRelatif(); [$bayarLabel, $bayarWarna] = $p->statusBayar(); @endphp
-                                <tr class="baris-link">
-                                    <td class="kartu-judul">
-                                        <a href="{{ route('admin.pesanan.show', $p) }}" class="stretched-link text-reset text-decoration-none fw-semibold">{{ $p->item->first()?->nama_item ?? $p->kode }}</a>
-                                        <div class="small text-ink-2 fw-normal">{{ $p->pelanggan->nama }}@if ($p->catatan) · {{ Str::limit($p->catatan, 40) }}@endif · <span class="angka">{{ $p->kode }}</span></div>
-                                    </td>
-                                    <td class="text-nowrap kartu-sebaris {{ $tanggalKelas }}">{{ $tanggalTeks }}</td>
-                                    <td class="text-nowrap kartu-status"><x-pill :warna="$p->warnaStatus()" :label="$p->labelStatus()" /></td>
-                                    <td class="text-nowrap kartu-sebaris"><x-pill :warna="$bayarWarna" :label="$bayarLabel" /></td>
-                                </tr>
+                                <x-baris-pesanan :pesanan="$p" />
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </x-panel>
+
+            {{-- Pengingat H-1: hanya tampil di panel, sengaja tanpa email/WA (lihat CLAUDE.md) --}}
+            <x-panel judul="Diambil / diantar besok" :tautan="route('admin.pesanan.index')">
+                @if ($besok->isEmpty())
+                    <p class="text-ink-2 mb-0">Tidak ada pesanan untuk besok.</p>
+                @else
+                    <p class="small text-ink-2">Pastikan sudah jadi dan ingatkan pemesan soal pelunasan.</p>
+                    <div class="table-responsive">
+                        <table class="table tabel-kartu">
+                            <tbody>
+                            @foreach ($besok as $p)
+                                <x-baris-pesanan :pesanan="$p" />
                             @endforeach
                             </tbody>
                         </table>

@@ -53,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
             $badge = [
                 'pesanan_masuk' => Pesanan::where('status', 'masuk')->count(),
                 'bahan_menipis' => Bahan::menipis()->count(),
+                'diambil_besok' => Pesanan::aktif()->diambilBesok()->count(),
             ];
 
             $menu = collect(config('admin-menu'))

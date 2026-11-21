@@ -47,6 +47,22 @@
                          hint="Dipakai untuk harga beli terakhir dan nominal pengeluaran." />
                 <x-field class="col-sm-6" label="Layu sekitar tanggal" name="tanggal_kadaluarsa" type="date"
                          :value="today()->addDays(14)->toDateString()" hint="Khusus bunga fresh, biasanya ±2 minggu." />
+                {{-- Tidak otomatis: stok satu angka per bahan (bukan per kulakan) dan tanggal layu hanya perkiraan,
+                     jadi yang menentukan berapa yang benar-benar layu tetap orang yang melihat bunganya. --}}
+                <div class="col-12 mb-3" id="khusus-fresh">
+                    <div class="form-check">
+                        <input type="hidden" name="buang_layu" value="0">
+                        <input class="form-check-input" type="checkbox" id="buang_layu" name="buang_layu" value="1" @checked(old('buang_layu'))>
+                        <label class="form-check-label" for="buang_layu">Buang sisa stok lama yang sudah layu</label>
+                    </div>
+                    <div id="isian-layu" class="mt-2" style="max-width:240px">
+                        <label class="form-label" for="jumlah_layu">Jumlah layu dibuang</label>
+                        <input type="number" step="0.01" min="0" id="jumlah_layu" name="jumlah_layu" value="{{ old('jumlah_layu') }}"
+                               class="form-control @error('jumlah_layu') is-invalid @enderror">
+                        @error('jumlah_layu') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="form-text">Terisi seluruh sisa stok lama; kurangi kalau sebagian masih bagus. Dicatat sebagai stok keluar "bunga layu".</div>
+                </div>
                 @if (auth()->user()->role === 'owner')
                     <div class="col-12 mb-3">
                         <div class="form-check">
@@ -74,6 +90,9 @@
         const pilihBahan = document.getElementById('bahan_id');
         const khususMasuk = document.getElementById('khusus-masuk');
         const kadaluarsa = document.getElementById('tanggal_kadaluarsa').closest('.col-sm-6');
+        const khususFresh = document.getElementById('khusus-fresh');
+        const buangLayu = document.getElementById('buang_layu');
+        const jumlahLayu = document.getElementById('jumlah_layu');
 
         function perbarui() {
             const opsi = pilihBahan.selectedOptions[0];
@@ -82,9 +101,17 @@
                 ? `Sisa sekarang: ${opsi.dataset.stok.replace('.', ',')} ${opsi.dataset.satuan}`
                 : '';
             khususMasuk.hidden = tipe !== 'masuk';
-            kadaluarsa.hidden = opsi.dataset.jenis !== 'fresh';
+            kadaluarsa.hidden = khususFresh.hidden = opsi.dataset.jenis !== 'fresh';
+            document.getElementById('isian-layu').hidden = !buangLayu.checked;
         }
 
+        // Saat dicentang atau ganti bahan, isi awal = seluruh sisa stok lama (tidak minus).
+        function isiJumlahLayu() {
+            if (buangLayu.checked) jumlahLayu.value = Math.max(0, parseFloat(pilihBahan.selectedOptions[0].dataset.stok || 0));
+        }
+
+        buangLayu.addEventListener('change', () => { isiJumlahLayu(); perbarui(); });
+        pilihBahan.addEventListener('change', isiJumlahLayu);
         pilihBahan.addEventListener('change', perbarui);
         document.querySelectorAll('input[name="tipe"]').forEach(r => r.addEventListener('change', perbarui));
         perbarui();

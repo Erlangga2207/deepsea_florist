@@ -9,12 +9,21 @@ use App\Models\Pesanan;
 use Illuminate\Support\Facades\DB;
 
 // Satu-satunya tempat yang boleh mengubah bahan.stok.
-// $opsi: tanggal, tanggal_kadaluarsa, keterangan, pesanan_id, pengeluaran_id, user_id, harga_beli, catat_pengeluaran (khusus masuk)
+// $opsi: tanggal, tanggal_kadaluarsa, keterangan, pesanan_id, pengeluaran_id, user_id, harga_beli, catat_pengeluaran, buang_layu (khusus masuk)
 class MutasiStokService
 {
     public function masuk(Bahan $bahan, float $jumlah, array $opsi = []): MutasiStok
     {
         return DB::transaction(function () use ($bahan, $jumlah, $opsi) {
+            // Sisa kulakan lama yang layu dibuang dulu, supaya riwayat stok jelas: keluar (layu) lalu masuk (baru).
+            if (($opsi['buang_layu'] ?? 0) > 0) {
+                $this->keluar($bahan, $opsi['buang_layu'], [
+                    'tanggal' => $opsi['tanggal'] ?? now(),
+                    'keterangan' => 'Bunga layu, dibuang saat stok baru masuk',
+                    'user_id' => $opsi['user_id'] ?? auth()->id(),
+                ]);
+            }
+
             $bahan->increment('stok', $jumlah);
 
             if (! empty($opsi['harga_beli'])) {

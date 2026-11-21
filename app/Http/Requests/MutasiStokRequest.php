@@ -18,6 +18,8 @@ class MutasiStokRequest extends FormRequest
             'tanggal_kadaluarsa' => ['nullable', 'date', 'after_or_equal:tanggal'],
             'harga_beli' => ['nullable', 'numeric', 'min:0'],
             'catat_pengeluaran' => ['boolean'],
+            'buang_layu' => ['boolean'],
+            'jumlah_layu' => ['nullable', 'required_if_accepted:buang_layu', 'numeric', 'min:0'],
             'keterangan' => ['nullable', 'required_if:tipe,penyesuaian', 'string', 'max:200'],
         ];
     }
@@ -26,6 +28,7 @@ class MutasiStokRequest extends FormRequest
     {
         return [
             'keterangan.required_if' => 'Tulis alasan penyesuaian, misalnya "bunga layu" atau "hasil hitung ulang".',
+            'jumlah_layu.required_if_accepted' => 'Isi jumlah bunga layu yang dibuang.',
         ];
     }
 }

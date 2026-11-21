@@ -63,6 +63,12 @@ class Pesanan extends Model
         return $query->whereIn('status', self::STATUS_AKTIF);
     }
 
+    // Pengingat H-1 di dashboard dan badge menu.
+    public function scopeDiambilBesok($query)
+    {
+        return $query->whereDate('tanggal_jadi', today()->addDay());
+    }
+
     public function labelStatus(): string
     {
         return self::STATUS[$this->status][0];

@@ -2,7 +2,7 @@
     $isOwner = auth()->user()->role === 'owner';
     // Bottom nav HP: [nama route, label, ikon, kunci badge, aktif?]
     $navHp = [
-        ['admin.dashboard', 'Beranda', 'M3 11l9-8 9 8M5 9.5V21h14V9.5M10 21v-6h4v6', null, request()->routeIs('admin.dashboard')],
+        ['admin.dashboard', 'Beranda', 'M3 11l9-8 9 8M5 9.5V21h14V9.5M10 21v-6h4v6', 'diambil_besok', request()->routeIs('admin.dashboard')],
         ['admin.pesanan.index', 'Pesanan', 'M9 3h6v4H9zM9 5H5v16h14V5h-4M9 12h6M9 16h4', 'pesanan_masuk', request()->routeIs('admin.pesanan.*') && ! request()->routeIs('admin.pesanan.create')],
         ['admin.pesanan.create', 'Tambah', 'M12 5v14M5 12h14', null, request()->routeIs('admin.pesanan.create')],
         ['admin.bahan.index', 'Stok', 'M4 7l8-4 8 4-8 4zM4 12l8 4 8-4M4 17l8 4 8-4', 'bahan_menipis', request()->routeIs('admin.bahan.*')],

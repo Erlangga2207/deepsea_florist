@@ -9,7 +9,7 @@ return [
     [
         'judul' => null,
         'item' => [
-            ['label' => 'Dashboard', 'route' => 'admin.dashboard', 'ikon' => 'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z'],
+            ['label' => 'Dashboard', 'route' => 'admin.dashboard', 'ikon' => 'M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z', 'badge' => 'diambil_besok'],
             ['label' => 'Pesanan', 'route' => 'admin.pesanan.index', 'ikon' => 'M9 3h6v4H9zM9 5H5v16h14V5h-4M9 12h6M9 16h4', 'badge' => 'pesanan_masuk'],
         ],
     ],

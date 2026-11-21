@@ -29,6 +29,7 @@ class DashboardController extends Controller
             'jatuhTempo' => Pesanan::aktif()->whereDate('tanggal_jadi', today())->count(),
             'bebanHariIni' => $bebanMinggu[0],
             'antrian' => $antrian,
+            'besok' => Pesanan::aktif()->with('pelanggan', 'item')->diambilBesok()->orderBy('created_at')->get(),
             'bahanMenipis' => $bahanMenipis,
             'bebanMinggu' => $bebanMinggu,
             'siapJual' => StokProdukJadi::where('status', 'tersedia')->latest()->get(),
