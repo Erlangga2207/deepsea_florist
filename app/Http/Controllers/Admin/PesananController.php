@@ -172,18 +172,52 @@ class PesananController extends Controller
     {
         abort_unless($pesanan->bisaCetakNota(), 404);
 
+        $ukuran = $request->query('ukuran', 'setengah-a4');
+        abort_unless(isset(Pesanan::UKURAN_NOTA[$ukuran]), 404);
+
         $pesanan->load('pelanggan', 'item', 'pembayaran');
 
-        $pdf = Pdf::setOption('isFontSubsettingEnabled', true)
-            ->loadView('admin.pesanan.nota', [
-                'pesanan' => $pesanan,
-                'pengaturan' => Pengaturan::ambil(),
-                'cabangUtama' => Cabang::utama(),
-            ])
-            ->setPaper('a4');
+        $data = [
+            'pesanan' => $pesanan,
+            'pengaturan' => Pengaturan::ambil(),
+            'cabangUtama' => Cabang::utama(),
+            'ukuran' => $ukuran,
+        ];
+
+        $pdf = str_starts_with($ukuran, 'struk-')
+            ? $this->pdfStruk($data, (int) substr($ukuran, 6))
+            : $this->pdfNota('admin.pesanan.nota', $data)->setPaper($ukuran === 'a5' ? 'a5' : 'a4');
 
         $nama = 'nota-'.$pesanan->kode.'.pdf';
 
         return $request->boolean('unduh') ? $pdf->download($nama) : $pdf->stream($nama);
+    }
+
+    private function pdfNota(string $view, array $data)
+    {
+        return Pdf::setOption('isFontSubsettingEnabled', true)->loadView($view, $data);
+    }
+
+    // Kertas thermal tidak punya tinggi tetap: render sekali di kertas sangat panjang
+    // untuk mengukur tinggi isi, lalu render ulang setinggi isi itu supaya tidak boros kertas.
+    private function pdfStruk(array $data, int $lebarMm)
+    {
+        $lebar = $lebarMm * 72 / 25.4;
+        $tinggi = 0;
+
+        $ukur = $this->pdfNota('admin.pesanan.nota-struk', $data)->setPaper([0, 0, $lebar, 5000]);
+        $ukur->getDomPDF()->setCallbacks([[
+            'event' => 'end_frame',
+            'f' => function ($frame) use (&$tinggi) {
+                if ($frame->get_node()->nodeName === 'body') {
+                    $tinggi = $frame->get_margin_height();
+                }
+            },
+        ]]);
+        $ukur->render();
+
+        // Margin atas + bawah @page di nota-struk = 2 × 4 mm.
+        return $this->pdfNota('admin.pesanan.nota-struk', $data)
+            ->setPaper([0, 0, $lebar, $tinggi + 8 * 72 / 25.4]);
     }
 }

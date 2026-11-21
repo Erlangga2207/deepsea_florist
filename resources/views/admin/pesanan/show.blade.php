@@ -24,7 +24,14 @@
         </div>
         <div class="d-flex gap-2">
             @if ($pesanan->bisaCetakNota())
-                <a href="{{ route('admin.pesanan.nota', $pesanan) }}" target="_blank" class="btn btn-garis">Cetak nota</a>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-garis dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Cetak nota</button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        @foreach (\App\Models\Pesanan::UKURAN_NOTA as $kunci => $label)
+                            <li><a class="dropdown-item" href="{{ route('admin.pesanan.nota', [$pesanan, 'ukuran' => $kunci]) }}" target="_blank">{{ $label }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
             <a href="{{ route('admin.pesanan.edit', $pesanan) }}" class="btn btn-garis">Ubah data</a>
         </div>

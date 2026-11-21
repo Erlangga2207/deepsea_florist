@@ -7,9 +7,9 @@
 <head>
     <meta charset="utf-8">
     <title>Nota {{ $pesanan->kode }}</title>
-    {{-- Isi nota dirancang muat di setengah atas A4, sisanya dipotong dan dipakai lagi --}}
+    {{-- Setengah A4: isi muat di setengah atas, sisanya dipotong. A5: kertasnya sudah seukuran itu. --}}
     <style>
-        @page { size: A4 portrait; margin: 12mm 14mm; }
+        @page { size: {{ $ukuran === 'a5' ? 'A5 portrait; margin: 8mm 10mm' : 'A4 portrait; margin: 12mm 14mm' }}; }
         body { font-family: DejaVu Sans, sans-serif; font-size: 9px; color: #2B2226; line-height: 1.3; }
         table { width: 100%; border-collapse: collapse; }
         td, th { padding: 2px 4px; vertical-align: top; text-align: left; }
@@ -128,6 +128,8 @@
 
     <div class="kecil abu" style="margin-top: 8px">Terima kasih telah memesan di {{ $pengaturan->nama_toko }}. Dicetak {{ now()->translatedFormat('j M Y H.i') }}.</div>
 
-    <div class="potong"><span>✂ potong di sini</span></div>
+    @if ($ukuran === 'setengah-a4')
+        <div class="potong"><span>✂ potong di sini</span></div>
+    @endif
 </body>
 </html>

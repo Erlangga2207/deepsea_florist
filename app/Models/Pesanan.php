@@ -103,6 +103,14 @@ class Pesanan extends Model
         return max(0, $this->total - $this->total_dibayar);
     }
 
+    // Pilihan kertas nota. Kunci "struk-NN" = kertas thermal selebar NN mm.
+    public const UKURAN_NOTA = [
+        'setengah-a4' => 'Setengah A4',
+        'a5' => 'A5',
+        'struk-80' => 'Struk thermal 80 mm',
+        'struk-58' => 'Struk thermal 58 mm',
+    ];
+
     // Satu-satunya syarat nota tersedia. Ganti di sini kalau nota hanya untuk status "selesai".
     public function bisaCetakNota(): bool
     {
